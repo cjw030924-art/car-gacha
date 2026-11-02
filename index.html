@@ -174,7 +174,7 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
   <header>
     <div>
       <h1>카 가챠 <span>차고</span></h1>
-      <div class="sub">셔터를 올려 오늘의 차를 뽑으세요 · 실차 기준 166종</div>
+      <div class="sub">셔터를 올려 오늘의 차를 뽑으세요 · 실차 기준 <span id="carCount">166</span>종</div>
     </div>
     <div class="hud">
       <div class="pill"><small>코인</small><b id="coins">0</b><button class="btn ghost" id="refill" style="padding:5px 9px;font-size:12px" hidden>+1000 충전</button></div>
@@ -391,7 +391,198 @@ BYD 아토 3|BYD|CN|2022|suv|C|BYD Atto 3
 BYD 씰|BYD|CN|2022|sedan|R|BYD Seal
 샤오미 SU7|샤오미|CN|2024|sedan|SR|Xiaomi SU7
 스코다 옥타비아|스코다|CZ|2020|sedan|C|Skoda Octavia 2020
-리막 네베라|리막|HR|2021|super|UR|Rimac Nevera`;
+리막 네베라|리막|HR|2021|super|UR|Rimac Nevera
+현대 포니 2|현대|KR|1982|hatch|SR|Hyundai Pony 2
+현대 포니 엑셀|현대|KR|1985|hatch|R|Hyundai Pony Excel
+현대 스텔라|현대|KR|1983|sedan|R|Hyundai Stellar
+현대 엑셀 (X2)|현대|KR|1989|sedan|C|Hyundai Excel X2
+현대 엑센트 (X3)|현대|KR|1994|sedan|C|Hyundai Accent X3
+현대 베르나 (LC)|현대|KR|1999|sedan|C|Hyundai Verna LC
+현대 베르나 (MC)|현대|KR|2005|sedan|C|Hyundai Verna MC
+현대 엑센트 (RB)|현대|KR|2010|sedan|C|Hyundai Accent RB
+현대 쏘나타 (Y1)|현대|KR|1985|sedan|R|Hyundai Sonata Y1
+현대 쏘나타 (Y2)|현대|KR|1988|sedan|C|Hyundai Sonata Y2
+현대 쏘나타 II|현대|KR|1993|sedan|C|Hyundai Sonata II
+현대 쏘나타 III|현대|KR|1996|sedan|C|Hyundai Sonata III
+현대 쏘나타 (EF)|현대|KR|1998|sedan|C|Hyundai EF Sonata
+현대 쏘나타 (NF)|현대|KR|2004|sedan|C|Hyundai NF Sonata
+현대 쏘나타 (YF)|현대|KR|2009|sedan|C|Hyundai YF Sonata
+현대 쏘나타 (LF)|현대|KR|2014|sedan|C|Hyundai LF Sonata
+현대 쏘나타 (DN8)|현대|KR|2019|sedan|C|Hyundai Sonata DN8
+현대 쏘나타 N 라인|현대|KR|2020|sedan|R|Hyundai Sonata N Line
+현대 마르샤|현대|KR|1995|sedan|R|Hyundai Marcia
+현대 그랜저 (L)|현대|KR|1986|sedan|SR|Hyundai Grandeur 1986
+현대 그랜저 (LX)|현대|KR|1992|sedan|R|Hyundai Grandeur LX
+현대 그랜저 XG|현대|KR|1998|sedan|C|Hyundai Grandeur XG
+현대 그랜저 (TG)|현대|KR|2005|sedan|C|Hyundai Grandeur TG
+현대 그랜저 (HG)|현대|KR|2011|sedan|C|Hyundai Grandeur HG
+현대 그랜저 (IG)|현대|KR|2016|sedan|C|Hyundai Grandeur IG
+현대 다이너스티|현대|KR|1996|sedan|R|Hyundai Dynasty
+현대 에쿠스 (LZ)|현대|KR|1999|sedan|SR|Hyundai Equus LZ
+현대 에쿠스 (VI)|현대|KR|2009|sedan|SR|Hyundai Equus VI
+현대 제네시스 (BH)|현대|KR|2008|sedan|R|Hyundai Genesis BH
+현대 제네시스 (DH)|현대|KR|2013|sedan|R|Hyundai Genesis DH
+현대 제네시스 쿠페|현대|KR|2008|coupe|SR|Hyundai Genesis Coupe
+현대 아슬란|현대|KR|2014|sedan|C|Hyundai Aslan
+현대 i30 (FD)|현대|KR|2007|hatch|C|Hyundai i30 FD
+현대 i30 (GD)|현대|KR|2011|hatch|C|Hyundai i30 GD
+현대 i30 (PD)|현대|KR|2016|hatch|C|Hyundai i30 PD
+현대 i30 N|현대|KR|2017|hatch|SR|Hyundai i30 N
+현대 i40|현대|KR|2011|sedan|C|Hyundai i40
+현대 아이오닉 (AE)|현대|KR|2016|hatch|C|Hyundai Ioniq Hybrid AE
+현대 아이오닉 6 N|현대|KR|2025|sedan|SR|Hyundai Ioniq 6 N
+현대 아이오닉 9|현대|KR|2025|suv|SR|Hyundai Ioniq 9
+현대 코나 (OS)|현대|KR|2017|suv|C|Hyundai Kona OS
+현대 코나 (SX2)|현대|KR|2023|suv|C|Hyundai Kona SX2
+현대 코나 N|현대|KR|2021|suv|SR|Hyundai Kona N
+현대 베뉴|현대|KR|2019|suv|C|Hyundai Venue
+현대 캐스퍼 일렉트릭|현대|KR|2024|mini|R|Hyundai Casper Electric
+현대 투싼 (JM)|현대|KR|2004|suv|C|Hyundai Tucson JM
+현대 투싼 ix|현대|KR|2009|suv|C|Hyundai Tucson ix LM
+현대 투싼 (TL)|현대|KR|2015|suv|C|Hyundai Tucson TL
+현대 싼타페 (SM)|현대|KR|2000|suv|C|Hyundai Santa Fe SM
+현대 싼타페 (CM)|현대|KR|2005|suv|C|Hyundai Santa Fe CM
+현대 싼타페 (DM)|현대|KR|2012|suv|C|Hyundai Santa Fe DM
+현대 싼타페 (TM)|현대|KR|2018|suv|C|Hyundai Santa Fe TM
+현대 테라칸|현대|KR|2001|suv|R|Hyundai Terracan
+현대 베라크루즈|현대|KR|2006|suv|C|Hyundai Veracruz
+현대 맥스크루즈|현대|KR|2013|suv|C|Hyundai Maxcruz
+현대 팰리세이드 (LX2)|현대|KR|2018|suv|R|Hyundai Palisade LX2
+현대 갤로퍼 II|현대|KR|1997|suv|R|Hyundai Galloper II
+현대 그레이스|현대|KR|1986|van|R|Hyundai Grace
+현대 스타렉스|현대|KR|1997|van|C|Hyundai Starex
+현대 그랜드 스타렉스|현대|KR|2007|van|C|Hyundai Grand Starex
+현대 트라제 XG|현대|KR|1999|van|C|Hyundai Trajet
+현대 포터 (1세대)|현대|KR|1977|truck|SR|Hyundai Porter 1977
+현대 포터 (2세대)|현대|KR|1986|truck|R|Hyundai Porter 1986
+현대 포터 (3세대)|현대|KR|1996|truck|C|Hyundai Porter 1996
+현대 포터 II 일렉트릭|현대|KR|2019|truck|C|Hyundai Porter II Electric
+현대 스쿠프|현대|KR|1990|coupe|SR|Hyundai Scoupe
+현대 티뷰론|현대|KR|1996|coupe|R|Hyundai Tiburon 1996
+현대 투스카니|현대|KR|2001|coupe|R|Hyundai Tuscani
+현대 벨로스터 (FS)|현대|KR|2011|hatch|C|Hyundai Veloster FS
+현대 벨로스터 (JS)|현대|KR|2018|hatch|C|Hyundai Veloster JS
+현대 아토스|현대|KR|1997|mini|C|Hyundai Atos
+현대 클릭|현대|KR|2002|hatch|C|Hyundai Click
+기아 브리사|기아|KR|1974|sedan|SR|Kia Brisa
+기아 프라이드 (JB)|기아|KR|2005|sedan|C|Kia Pride JB
+기아 프라이드 (UB)|기아|KR|2011|sedan|C|Kia Pride UB
+기아 비스토|기아|KR|1999|mini|C|Kia Visto
+기아 모닝 (SA)|기아|KR|2004|mini|C|Kia Morning SA
+기아 모닝 (TA)|기아|KR|2011|mini|C|Kia Morning TA
+기아 모닝 (JA)|기아|KR|2017|mini|C|Kia Morning JA
+기아 레이 (TAM)|기아|KR|2011|mini|C|Kia Ray 2011
+기아 레이 EV|기아|KR|2023|mini|R|Kia Ray EV
+기아 세피아|기아|KR|1992|sedan|C|Kia Sephia
+기아 스펙트라|기아|KR|2000|sedan|C|Kia Spectra
+기아 쎄라토|기아|KR|2003|sedan|C|Kia Cerato 2003
+기아 포르테|기아|KR|2008|sedan|C|Kia Forte 2008
+기아 K3 (YD)|기아|KR|2012|sedan|C|Kia K3 YD
+기아 콩코드|기아|KR|1987|sedan|R|Kia Concord
+기아 크레도스|기아|KR|1995|sedan|C|Kia Credos
+기아 옵티마|기아|KR|2000|sedan|C|Kia Optima 2000
+기아 로체|기아|KR|2005|sedan|C|Kia Lotze
+기아 K5 (TF)|기아|KR|2010|sedan|C|Kia K5 TF
+기아 K5 (JF)|기아|KR|2015|sedan|C|Kia K5 JF
+기아 K5 (DL3)|기아|KR|2019|sedan|C|Kia K5 DL3
+기아 포텐샤|기아|KR|1992|sedan|R|Kia Potentia
+기아 엔터프라이즈|기아|KR|1997|sedan|R|Kia Enterprise
+기아 오피러스|기아|KR|2003|sedan|R|Kia Opirus
+기아 K7 (VG)|기아|KR|2009|sedan|C|Kia K7 VG
+기아 K7 (YG)|기아|KR|2016|sedan|C|Kia K7 YG
+기아 K8 (GL3)|기아|KR|2021|sedan|R|Kia K8 GL3
+기아 K9 (KH)|기아|KR|2012|sedan|R|Kia K9 KH
+기아 스팅어|기아|KR|2017|coupe|R|Kia Stinger 2017
+기아 엘란|기아|KR|1996|coupe|SSR|Kia Elan
+기아 셀토스 (SP2)|기아|KR|2019|suv|C|Kia Seltos SP2
+기아 니로 (DE)|기아|KR|2016|suv|C|Kia Niro DE
+기아 니로 (SG2)|기아|KR|2022|suv|C|Kia Niro SG2
+기아 쏘울|기아|KR|2008|hatch|C|Kia Soul 2008
+기아 스포티지 (1세대)|기아|KR|1993|suv|R|Kia Sportage 1993
+기아 스포티지 (KM)|기아|KR|2004|suv|C|Kia Sportage KM
+기아 스포티지 R|기아|KR|2010|suv|C|Kia Sportage R SL
+기아 스포티지 (QL)|기아|KR|2015|suv|C|Kia Sportage QL
+기아 스포티지 (NQ5)|기아|KR|2021|suv|C|Kia Sportage NQ5
+기아 쏘렌토 (BL)|기아|KR|2002|suv|C|Kia Sorento BL
+기아 쏘렌토 R|기아|KR|2009|suv|C|Kia Sorento R XM
+기아 쏘렌토 (UM)|기아|KR|2014|suv|C|Kia Sorento UM
+기아 쏘렌토 (MQ4)|기아|KR|2020|suv|C|Kia Sorento MQ4
+기아 모하비|기아|KR|2008|suv|R|Kia Mohave
+기아 모하비 더 마스터|기아|KR|2019|suv|R|Kia Mohave The Master
+기아 록스타|기아|KR|1990|suv|R|Kia Rocsta
+기아 레토나|기아|KR|1998|suv|R|Kia Retona
+기아 카렌스|기아|KR|1999|van|C|Kia Carens 1999
+기아 카니발 (KV)|기아|KR|1998|van|C|Kia Carnival 1998
+기아 카니발 (VQ)|기아|KR|2005|van|C|Kia Carnival VQ
+기아 카니발 (YP)|기아|KR|2014|van|C|Kia Carnival YP
+기아 카니발 (KA4)|기아|KR|2020|van|C|Kia Carnival KA4
+기아 봉고 (1세대)|기아|KR|1980|truck|SR|Kia Bongo 1980
+기아 봉고 프론티어|기아|KR|1997|truck|C|Kia Bongo Frontier
+기아 타스만|기아|KR|2025|truck|SR|Kia Tasman
+기아 EV3|기아|KR|2024|suv|C|Kia EV3
+기아 EV4|기아|KR|2025|sedan|C|Kia EV4
+기아 EV5|기아|KR|2023|suv|R|Kia EV5
+기아 EV9 GT|기아|KR|2025|suv|SR|Kia EV9 GT
+기아 PV5|기아|KR|2025|van|R|Kia PV5
+제네시스 G70 슈팅 브레이크|제네시스|KR|2022|sedan|SR|Genesis G70 Shooting Brake
+제네시스 G80 (DH)|제네시스|KR|2016|sedan|R|Genesis G80 DH
+제네시스 EQ900|제네시스|KR|2015|sedan|SR|Genesis EQ900
+제네시스 GV60|제네시스|KR|2021|suv|R|Genesis GV60
+제네시스 GV60 마그마|제네시스|KR|2025|suv|SSR|Genesis GV60 Magma
+쌍용 코란도 (1세대)|쌍용|KR|1983|suv|SR|SsangYong Korando 1983
+쌍용 코란도 (KJ)|쌍용|KR|1996|suv|R|SsangYong Korando KJ
+쌍용 코란도 C|쌍용|KR|2011|suv|C|SsangYong Korando C
+쌍용 코란도 (C300)|쌍용|KR|2019|suv|C|SsangYong Korando C300
+쌍용 칼리스타|쌍용|KR|1991|coupe|SSR|SsangYong Kallista
+쌍용 무쏘 스포츠|쌍용|KR|2002|truck|R|SsangYong Musso Sports
+KGM 무쏘 EV|KGM|KR|2025|truck|C|KGM Musso EV
+쌍용 렉스턴 (Y200)|쌍용|KR|2001|suv|R|SsangYong Rexton 2001
+쌍용 렉스턴 스포츠|쌍용|KR|2018|truck|C|SsangYong Rexton Sports
+쌍용 체어맨|쌍용|KR|1997|sedan|SR|SsangYong Chairman
+쌍용 체어맨 W|쌍용|KR|2008|sedan|SR|SsangYong Chairman W
+쌍용 이스타나|쌍용|KR|1995|van|C|SsangYong Istana
+쌍용 카이런|쌍용|KR|2005|suv|C|SsangYong Kyron
+쌍용 액티언|쌍용|KR|2005|suv|C|SsangYong Actyon
+KGM 액티언|KGM|KR|2024|suv|R|KGM Actyon 2024
+쌍용 로디우스|쌍용|KR|2004|van|C|SsangYong Rodius
+쌍용 티볼리 에어|쌍용|KR|2016|suv|C|SsangYong Tivoli Air
+KGM 토레스 EVX|KGM|KR|2023|suv|C|KGM Torres EVX
+르노삼성 SM5 (EX1)|르노삼성|KR|2005|sedan|C|Renault Samsung SM5 2005
+르노삼성 SM5 (L43)|르노삼성|KR|2010|sedan|C|Renault Samsung SM5 L43
+르노삼성 SM3|르노삼성|KR|2002|sedan|C|Renault Samsung SM3 2002
+르노삼성 SM3 (L38)|르노삼성|KR|2009|sedan|C|Renault Samsung SM3 L38
+르노삼성 SM7|르노삼성|KR|2004|sedan|C|Renault Samsung SM7 2004
+르노삼성 SM7 (L47)|르노삼성|KR|2011|sedan|C|Renault Samsung SM7 L47
+르노삼성 SM6|르노삼성|KR|2016|sedan|C|Renault Samsung SM6
+르노삼성 QM5|르노삼성|KR|2007|suv|C|Renault Samsung QM5
+르노삼성 QM6|르노삼성|KR|2016|suv|C|Renault Samsung QM6
+르노삼성 QM3|르노삼성|KR|2013|suv|C|Renault Samsung QM3
+르노삼성 XM3|르노삼성|KR|2020|suv|C|Renault Samsung XM3
+대우 로얄 살롱|대우|KR|1980|sedan|R|Daewoo Royale Salon
+대우 프린스|대우|KR|1991|sedan|C|Daewoo Prince
+대우 브로엄|대우|KR|1991|sedan|R|Daewoo Brougham
+대우 아카디아|대우|KR|1994|sedan|SR|Daewoo Arcadia
+대우 에스페로|대우|KR|1990|sedan|R|Daewoo Espero
+대우 씨에로|대우|KR|1994|sedan|C|Daewoo Cielo
+대우 누비라|대우|KR|1997|sedan|C|Daewoo Nubira
+대우 레간자|대우|KR|1997|sedan|C|Daewoo Leganza
+대우 라노스|대우|KR|1997|sedan|C|Daewoo Lanos
+대우 매그너스|대우|KR|2000|sedan|C|Daewoo Magnus
+대우 레조|대우|KR|2000|van|C|Daewoo Rezzo
+대우 다마스|대우|KR|1991|van|C|Daewoo Damas
+대우 라보|대우|KR|1991|truck|C|Daewoo Labo
+GM대우 칼로스|GM대우|KR|2002|hatch|C|Daewoo Kalos
+GM대우 라세티|GM대우|KR|2002|sedan|C|Daewoo Lacetti
+GM대우 토스카|GM대우|KR|2006|sedan|C|Daewoo Tosca
+GM대우 윈스톰|GM대우|KR|2006|suv|C|Daewoo Winstorm
+GM대우 알페온|GM대우|KR|2010|sedan|C|Daewoo Alpheon
+GM대우 마티즈 크리에이티브|GM대우|KR|2009|mini|C|Daewoo Matiz Creative
+쉐보레 스파크|쉐보레|KR|2015|mini|C|Chevrolet Spark 2015
+쉐보레 크루즈|쉐보레|KR|2011|sedan|C|Chevrolet Cruze 2011
+쉐보레 말리부|쉐보레|KR|2016|sedan|C|Chevrolet Malibu 2016
+쉐보레 트랙스|쉐보레|KR|2013|suv|C|Chevrolet Trax 2013
+쉐보레 트레일블레이저|쉐보레|KR|2020|suv|C|Chevrolet Trailblazer 2020
+쉐보레 올란도|쉐보레|KR|2011|van|C|Chevrolet Orlando`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,c,y,t,r,e]=l.split("|");return{id:i,name:n,brand:b,cty:c,year:+y,type:t,rar:r,eng:e}});
 const RAR=["C","R","SR","SSR","UR"];
 const WEIGHT={C:50,R:30,SR:14,SSR:5,UR:1};
@@ -588,7 +779,7 @@ document.addEventListener("click",e=>{const c=e.target.closest(".card[data-id]")
 // ---------- collection ----------
 // series = model line (아반떼, 쏘나타, K5 …): name minus brand, trim words like "더 뉴" and generation codes in parens
 const SERIES_FIX={"현대 엘란트라 (J1)":"아반떼","토요타 GR 수프라":"수프라","닛산 스카이라인 GT-R (R34)":"GT-R","메르세데스-벤츠 300 SL 걸윙":"300 SL",
- "메르세데스-AMG GT":"AMG GT","현대 N 비전 74":"N 비전 74","토요타 스프린터 트레노 AE86":"AE86","르노 그랑 콜레오스":"그랑 콜레오스","아우디 RS 6 아반트":"RS 6","폴스타 2":"폴스타 2","BYD 아토 3":"아토 3","닛산 페어레이디 Z (RZ34)":"페어레이디 Z"};
+ "메르세데스-AMG GT":"AMG GT","현대 N 비전 74":"N 비전 74","토요타 스프린터 트레노 AE86":"AE86","르노 그랑 콜레오스":"그랑 콜레오스","아우디 RS 6 아반트":"RS 6","폴스타 2":"폴스타 2","BYD 아토 3":"아토 3","닛산 페어레이디 Z (RZ34)":"페어레이디 Z","현대 그랜드 스타렉스":"스타렉스","제네시스 EQ900":"G90","대우 로얄 살롱":"로얄 살롱"};
 function seriesOf(c){if(SERIES_FIX[c.name])return SERIES_FIX[c.name];
  let n=c.name.replace(/\s*\(.*?\)/g,"");
  if(n.startsWith(c.brand+" "))n=n.slice(c.brand.length+1);
@@ -604,8 +795,9 @@ function renderColl(){
  $("prog").style.width=(ownedN/CARS.length*100)+"%";
  chips($("rarFilter"),[["ALL","전체 등급"],...RAR.map(r=>[r,`${r} ${RNAME[r]}`])],fR,v=>fR=v);
  chips($("ctyFilter"),[["ALL","전체 국가"],...Object.entries(CTY)],fC,v=>{fC=v;fS="ALL"});
- // series chips only inside one country, in data order (brand by brand)
- const sers=fC==="ALL"?[]:[...new Set(CARS.filter(c=>c.cty===fC).map(c=>c.ser))];
+ // series chips only inside one country, grouped brand by brand (later-added cars join their brand's block)
+ const inC=CARS.filter(c=>c.cty===fC),bOrd=[...new Set(inC.map(c=>c.brand))];
+ const sers=fC==="ALL"?[]:[...new Set(inC.map(c=>c.ser))].sort((a,b)=>{const fa=inC.find(c=>c.ser===a),fb=inC.find(c=>c.ser===b);return bOrd.indexOf(fa.brand)-bOrd.indexOf(fb.brand)||fa.id-fb.id});
  if(!sers.includes(fS))fS="ALL";
  $("serFilter").hidden=!sers.length;
  if(sers.length){const cnt=s=>{const a=CARS.filter(c=>c.cty===fC&&c.ser===s);return`${a.filter(c=>state.owned[c.id]).length}/${a.length}`};
@@ -615,7 +807,7 @@ function renderColl(){
  if(!list.length){$("coll").innerHTML=`<div class="foot" style="grid-column:1/-1">조건에 맞는 차가 없어요</div>`;return}
  if(fC==="ALL"){$("coll").innerHTML=list.map(c=>cardHTML(c,{coll:true})).join("");return}
  // inside a country: one section per series, oldest generation first
- const groups=new Map();list.forEach(c=>{if(!groups.has(c.ser))groups.set(c.ser,[]);groups.get(c.ser).push(c)});
+ const groups=new Map(sers.map(s=>[s,[]]));list.forEach(c=>groups.get(c.ser).push(c));[...groups].forEach(([s,cs])=>{if(!cs.length)groups.delete(s)});
  $("coll").innerHTML=[...groups].map(([s,cs])=>{const all=CARS.filter(c=>c.cty===fC&&c.ser===s);
   return `<div class="shead"><b>${s}</b><span>${cs[0].brand} · ${all.filter(c=>state.owned[c.id]).length}/${all.length}대</span>${fS==="ALL"&&all.length>1?`<button class="chip" data-ser="${s}">이 시리즈만</button>`:""}</div>`+
    cs.sort((a,b)=>a.year-b.year).map(c=>cardHTML(c,{coll:true})).join("")}).join("");
@@ -637,6 +829,7 @@ $("odds").innerHTML=RAR.map(r=>`<span><i style="background:${rc(r)}"></i>${r} ${
 // opening frame: the newest Avante parked behind a half-open view
 const sample=CARS.find(c=>c.name==="현대 디 올 뉴 아반떼");
 $("reveal").innerHTML=`<div class="carbox" style="opacity:.25">${svgCar(sample)}</div><div class="info"><div class="meta">뽑기 버튼을 누르면 셔터가 올라가요</div></div>`;
+$("carCount").textContent=CARS.length;
 renderHUD();
 </script>
 
