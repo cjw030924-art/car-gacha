@@ -147,6 +147,13 @@ canvas.fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z
 .stats{display:flex;justify-content:space-between;font:500 13px var(--f-mono);color:var(--muted);flex-wrap:wrap;gap:8px}
 .stats b{color:var(--paint)}
 .coll{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.bar.series{padding:10px;border:1px dashed var(--concrete);border-radius:12px}
+.bar.series .chip small{font:500 11px var(--f-mono);opacity:.75;margin-left:4px}
+.shead{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;margin-top:10px;padding-bottom:6px;border-bottom:1px solid var(--concrete)}
+.shead:first-child{margin-top:0}
+.shead b{font:400 22px var(--f-display);color:var(--paint)}
+.shead span{font:500 12px var(--f-mono);color:var(--muted)}
+.shead button{margin-left:auto}
 @media (max-width:420px){.coll{grid-template-columns:repeat(2,minmax(0,1fr))}}
 input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);color:var(--paint);border-radius:8px;padding:8px 10px;font:500 14px var(--f-body);flex:1;min-width:140px}
 
@@ -207,6 +214,7 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
     <div class="progress"><div id="prog"></div></div>
     <div class="bar" id="rarFilter"></div>
     <div class="bar" id="ctyFilter"></div>
+    <div class="bar series" id="serFilter" hidden></div>
     <div class="bar"><input type="search" id="q" placeholder="보유한 차 이름·브랜드 검색"><button class="chip" id="ownedOnly" aria-pressed="false">보유만</button></div>
     <div class="coll" id="coll"></div>
     <div class="foot"><button class="chip" id="reset">기록 초기화</button> <span id="resetConfirm" hidden>정말 지울까요? <button class="chip" id="resetYes">지우기</button> <button class="chip" id="resetNo">취소</button></span></div>
@@ -578,7 +586,16 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")$("modal").hidden=tr
 document.addEventListener("click",e=>{const c=e.target.closest(".card[data-id]");if(c&&!c.disabled){const f=c.closest(".flip");if(f&&!f.classList.contains("open"))return;openModal(+c.dataset.id)}});
 
 // ---------- collection ----------
-let fR="ALL",fC="ALL",ownedOnly=false;
+// series = model line (아반떼, 쏘나타, K5 …): name minus brand, trim words like "더 뉴" and generation codes in parens
+const SERIES_FIX={"현대 엘란트라 (J1)":"아반떼","토요타 GR 수프라":"수프라","닛산 스카이라인 GT-R (R34)":"GT-R","메르세데스-벤츠 300 SL 걸윙":"300 SL",
+ "메르세데스-AMG GT":"AMG GT","현대 N 비전 74":"N 비전 74","토요타 스프린터 트레노 AE86":"AE86","르노 그랑 콜레오스":"그랑 콜레오스","아우디 RS 6 아반트":"RS 6","폴스타 2":"폴스타 2","BYD 아토 3":"아토 3","닛산 페어레이디 Z (RZ34)":"페어레이디 Z"};
+function seriesOf(c){if(SERIES_FIX[c.name])return SERIES_FIX[c.name];
+ let n=c.name.replace(/\s*\(.*?\)/g,"");
+ if(n.startsWith(c.brand+" "))n=n.slice(c.brand.length+1);
+ n=n.replace(/^(디 올 뉴|올 뉴|더 뉴)\s/,"");
+ const w=n.split(" ");return /^(아이오닉|모델)$/.test(w[0])&&w[1]?w[0]+" "+w[1]:w[0]}
+CARS.forEach(c=>c.ser=seriesOf(c));
+let fR="ALL",fC="ALL",fS="ALL",ownedOnly=false;
 function chips(el,vals,cur,set){el.innerHTML=vals.map(([v,l])=>`<button class="chip" data-v="${v}" aria-pressed="${v===cur}">${l}</button>`).join("");el.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;set(b.dataset.v);renderColl()}}
 function renderColl(){
  const ownedN=CARS.filter(c=>state.owned[c.id]).length;
@@ -586,12 +603,25 @@ function renderColl(){
  $("collRar").textContent=RAR.map(r=>`${r} ${CARS.filter(c=>c.rar===r&&state.owned[c.id]).length}/${CARS.filter(c=>c.rar===r).length}`).join("  ");
  $("prog").style.width=(ownedN/CARS.length*100)+"%";
  chips($("rarFilter"),[["ALL","전체 등급"],...RAR.map(r=>[r,`${r} ${RNAME[r]}`])],fR,v=>fR=v);
- chips($("ctyFilter"),[["ALL","전체 국가"],...Object.entries(CTY)],fC,v=>fC=v);
+ chips($("ctyFilter"),[["ALL","전체 국가"],...Object.entries(CTY)],fC,v=>{fC=v;fS="ALL"});
+ // series chips only inside one country, in data order (brand by brand)
+ const sers=fC==="ALL"?[]:[...new Set(CARS.filter(c=>c.cty===fC).map(c=>c.ser))];
+ if(!sers.includes(fS))fS="ALL";
+ $("serFilter").hidden=!sers.length;
+ if(sers.length){const cnt=s=>{const a=CARS.filter(c=>c.cty===fC&&c.ser===s);return`${a.filter(c=>state.owned[c.id]).length}/${a.length}`};
+  chips($("serFilter"),[["ALL","전체 시리즈"],...sers.map(s=>[s,`${s}<small>${cnt(s)}</small>`])],fS,v=>fS=v)}
  const q=$("q").value.trim().toLowerCase();
- const list=CARS.filter(c=>(fR==="ALL"||c.rar===fR)&&(fC==="ALL"||c.cty===fC)&&(!ownedOnly||state.owned[c.id])&&(!q||(state.owned[c.id]&&(c.name+c.brand+c.eng).toLowerCase().includes(q))));
- $("coll").innerHTML=list.length?list.map(c=>cardHTML(c,{coll:true})).join(""):`<div class="foot" style="grid-column:1/-1">조건에 맞는 차가 없어요</div>`;
+ const list=CARS.filter(c=>(fR==="ALL"||c.rar===fR)&&(fC==="ALL"||c.cty===fC)&&(fS==="ALL"||c.ser===fS)&&(!ownedOnly||state.owned[c.id])&&(!q||(state.owned[c.id]&&(c.name+c.brand+c.eng).toLowerCase().includes(q))));
+ if(!list.length){$("coll").innerHTML=`<div class="foot" style="grid-column:1/-1">조건에 맞는 차가 없어요</div>`;return}
+ if(fC==="ALL"){$("coll").innerHTML=list.map(c=>cardHTML(c,{coll:true})).join("");return}
+ // inside a country: one section per series, oldest generation first
+ const groups=new Map();list.forEach(c=>{if(!groups.has(c.ser))groups.set(c.ser,[]);groups.get(c.ser).push(c)});
+ $("coll").innerHTML=[...groups].map(([s,cs])=>{const all=CARS.filter(c=>c.cty===fC&&c.ser===s);
+  return `<div class="shead"><b>${s}</b><span>${cs[0].brand} · ${all.filter(c=>state.owned[c.id]).length}/${all.length}대</span>${fS==="ALL"&&all.length>1?`<button class="chip" data-ser="${s}">이 시리즈만</button>`:""}</div>`+
+   cs.sort((a,b)=>a.year-b.year).map(c=>cardHTML(c,{coll:true})).join("")}).join("");
 }
 $("q").oninput=renderColl;
+$("coll").addEventListener("click",e=>{const b=e.target.closest("[data-ser]");if(b){fS=b.dataset.ser;renderColl()}});
 $("ownedOnly").onclick=e=>{ownedOnly=!ownedOnly;e.currentTarget.setAttribute("aria-pressed",ownedOnly);renderColl()};
 $("reset").onclick=()=>$("resetConfirm").hidden=false;
 $("resetNo").onclick=()=>$("resetConfirm").hidden=true;
