@@ -73,6 +73,13 @@ canvas.fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z
 .carbox svg{width:100%;height:auto;display:block}
 .carbox .mirror{position:absolute;left:0;right:0;top:100%;transform:scaleY(-1);transform-origin:top;opacity:.18;
   -webkit-mask:linear-gradient(to top,#000 0,transparent 45%);mask:linear-gradient(to top,#000 0,transparent 45%);margin-top:-14%}
+.photo{position:relative;aspect-ratio:3/2;border-radius:8px;overflow:hidden;background:#0c0e10}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.photo svg{position:absolute;inset:0;margin:auto;height:auto}
+.carbox .photo{border-radius:12px;border:2px solid var(--rc,var(--concrete));box-shadow:0 18px 40px #000a,0 0 28px color-mix(in srgb,var(--rc,#000) 35%,transparent)}
+.carbox .mirror.photo-m{margin-top:6px}
+.credit{font-size:11px;color:var(--muted);line-height:1.5;overflow-wrap:anywhere}
+.credit a{color:inherit}
 .drive{animation:drive 1.1s cubic-bezier(.15,.75,.25,1) both}
 @keyframes drive{0%{transform:translateX(-120%) skewX(-6deg);filter:blur(4px)}70%{filter:blur(0)}85%{transform:translateX(2%) skewX(1deg)}100%{transform:none}}
 .drive .wheel{animation:roll 1.1s cubic-bezier(.15,.75,.25,1) both}
@@ -125,7 +132,7 @@ canvas.fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z
 .flip .inner{position:relative;transition:transform .55s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d;height:100%}
 .flip.open .inner{transform:rotateY(180deg)}
 .flip .back,.flip .card{backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.flip .card{transform:rotateY(180deg);height:100%}
+.flip .card{transform:rotateY(180deg);height:100%;width:100%}
 .flip .back{position:absolute;inset:0;border-radius:12px;border:1px solid var(--concrete);display:flex;align-items:center;justify-content:center;
   background:repeating-linear-gradient(180deg,#3a3f46 0 10px,#2d3137 10px 12px);font:400 26px var(--f-display);color:#ffffff30}
 .flip .back.hint{box-shadow:0 0 0 2px var(--h),0 0 18px var(--h)}
@@ -192,7 +199,7 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
     </div>
     <div class="msg" id="msg"></div>
     <div class="odds" id="odds"></div>
-    <div class="foot">중복 환급: C 10 · R 20 · SR 50 · SSR 150 · UR 500 코인 · 60회 안에 SSR 이상이 안 나오면 다음 뽑기는 SSR 이상 확정<br>차를 누르면 실제 사진과 위키백과 링크를 볼 수 있어요</div>
+    <div class="foot">중복 환급: C 10 · R 20 · SR 50 · SSR 150 · UR 500 코인 · 60회 안에 SSR 이상이 안 나오면 다음 뽑기는 SSR 이상 확정<br>차를 누르면 크게 보고 위키백과 링크를 열 수 있어요 · 차 사진은 위키미디어 커먼즈의 자유 라이선스 사진이에요(저작자 표기는 상세 화면)</div>
   </section>
 
   <section id="view-coll" class="panel" hidden>
@@ -208,6 +215,7 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
 
 <div class="modal" id="modal" hidden><div class="sheet" id="sheet"></div></div>
 
+<script src="photos.js"></script>
 <script>
 // 이름|브랜드|국가|연도|차종|등급|영문 검색명
 const RAW=`현대 포니|현대|KR|1975|hatch|SR|Hyundai Pony
@@ -467,9 +475,14 @@ function svgCar(car,opt={}){
 </svg>`;
 }
 function plate(car){const h=hash(car.name+"plate");const ko="가나다라마거너더러머버서어저고노도로모보소오조구누두루무부수우주";
- return `${100+h%900}${ko[(h>>7)%ko.length]} ${String(1000+(h>>11)%9000)}`;}
+ return `${100+h%900}${ko[(h>>>7)%ko.length]} ${String(1000+(h>>>11)%9000)}`;}
 const gimg=c=>"https://www.google.com/search?tbm=isch&q="+encodeURIComponent(c.eng);
 const wiki=c=>"https://ko.wikipedia.org/w/index.php?search="+encodeURIComponent(c.name.replace(/\s*\(.*?\)/g,""));
+// real photo with the side render as fallback if the image fails to load
+function photo(car,cls=""){return `<div class="photo ${cls}"><img src="img/${car.id}.jpg" alt="${car.name}" loading="lazy" decoding="async" onerror="this.parentNode.innerHTML=svgCar(CARS[${car.id}])"></div>`}
+const esc=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+function credit(car){const p=typeof PHOTO!=="undefined"&&PHOTO[car.id];if(!p)return"";
+ return `<div class="credit">사진: ${esc(p[0])} · ${esc(p[1])} · <a href="${esc(p[2])}" target="_blank" rel="noopener">위키미디어 커먼즈 ↗</a></div>`}
 
 // ---------- state ----------
 let state={coins:3000,owned:{},pity:0};
@@ -487,7 +500,7 @@ function cardHTML(car,o={}){
  const got=state.owned[car.id]||0;const locked=o.coll&&!got;
  return `<button class="card${locked?" locked":""}" data-r="${car.rar}" data-id="${car.id}" ${locked?'disabled aria-label="미보유 차량"':""}>
   <div class="top"><span class="badge" style="background:${rc(car.rar)}">${car.rar}</span>${o.isNew?'<span class="newtag">NEW</span>':o.coll&&got?`<span class="count">×${got}</span>`:o.dup?`<span class="count">+${REFUND[car.rar]}</span>`:""}</div>
-  ${svgCar(car)}
+  ${locked?svgCar(car):photo(car)}
   <div class="plate">${locked?"??? ????":plate(car)}</div>
   <div class="cn">${locked?"???":car.name}</div>
   <div class="cm">${locked?`${CTY[car.cty]} · ${TYPE[car.type]}`:`${CTY[car.cty]} · ${car.year} · ${TYPE[car.type]}`}</div></button>`;
@@ -522,7 +535,7 @@ function pull(n){
   if(RAR.indexOf(best.rar)>=3){sh.classList.add("shake")}
   setTimeout(()=>{sh.classList.remove("shake");
    if(n===1){const{c,isNew}=items[0];
-    $("reveal").innerHTML=`<div class="carbox drive">${svgCar(c)}<div class="mirror">${svgCar(c)}</div></div>
+    $("reveal").innerHTML=`<div class="carbox drive" style="--rc:${rc(c.rar)}">${photo(c)}<div class="mirror photo-m" aria-hidden="true">${photo(c)}</div></div>
      <div class="info fade"><span class="badge" style="background:${rc(c.rar)}">${c.rar} · ${RNAME[c.rar]}</span>
      <div class="name">${c.name}</div><div class="eng">${c.eng}</div>
      <div class="plate big">${plate(c)}</div>
@@ -553,11 +566,12 @@ function openModal(id){const c=CARS[id];if(!state.owned[id])return;
   <span class="badge" style="background:${rc(c.rar)};align-self:flex-start">${c.rar} · ${RNAME[c.rar]}</span>
   <div style="font:400 clamp(24px,5vw,34px) var(--f-display);line-height:1.1;padding-right:70px">${c.name}</div>
   <div class="eng" style="font:500 13px var(--f-mono);color:var(--muted);margin-top:-8px">${c.eng}</div>
-  <div class="carbox" style="width:100%">${svgCar(c)}</div>
+  <div class="carbox" style="width:100%;--rc:${rc(c.rar)}">${photo(c)}</div>
+  ${credit(c)}
   <div class="plate big" style="align-self:center">${plate(c)}</div>
   <div class="specs"><div><small>브랜드</small><b>${c.brand}</b></div><div><small>국가</small><b>${CTY[c.cty]}</b></div><div><small>출시</small><b>${c.year}년</b></div><div><small>차종</small><b>${TYPE[c.type]}</b></div></div>
   <div class="links" style="justify-content:flex-start"><a class="link" href="${gimg(c)}" target="_blank" rel="noopener">실제 사진 보기 ↗</a><a class="link" href="${wiki(c)}" target="_blank" rel="noopener">위키백과 ↗</a></div>
-  <div class="foot" style="text-align:left">보유 ${state.owned[id]}대 · 그림은 차종별 측면 렌더이고, 실제 모습은 사진 링크로 확인할 수 있어요</div>`;
+  <div class="foot" style="text-align:left">보유 ${state.owned[id]}대</div>`;
  $("modal").hidden=false;$("mclose").focus();$("mclose").onclick=()=>$("modal").hidden=true}
 $("modal").onclick=e=>{if(e.target.id==="modal")$("modal").hidden=true};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")$("modal").hidden=true});
