@@ -1,4 +1,4 @@
-// 차 사진: 위키미디어 커먼즈 (id: [저작자, 라이선스, 원본 페이지])
+// 차 사진: 위키미디어 커먼즈 (id: [저작자, 라이선스, 원본 페이지]) · 원본 페이지가 비어 있으면 사용자 제공 사진
 const PHOTO={
  0:["Vauxford", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:1992_Hyundai_Pony_X2_LS_1.3_Front.jpg"],
  1:["Dogs.barking.duster.rolling", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:1991_Hyundai_Elantra_GLS_16V_(Forssa,_Finland).jpg"],
@@ -184,6 +184,7 @@ const PHOTO={
  181:["Benespit", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:0_Hyundai_Sonata_(LF)_1.jpg"],
  182:["Mr.choppers", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:2020_Hyundai_Sonata_SEL_(Quartz_White),_front_right.jpg"],
  183:["Dinkun Chen", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_N-LINE_(DN8)_China.jpg"],
+ 184:["사용자 제공", "", ""],
  185:["skinnylawyer from Los Angeles, California, USA", "CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Hyundai_Grandeur_(Korea_Domestic)_-_Flickr_-_skinnylawyer.jpg"],
  186:["Damian B Oh", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Hyundai_Grandeur_V6_3.0_LX_black_(1).jpg"],
  187:["Dinkun Chen", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:HYUNDAI_GRANDEUR_(XG)_China.jpg"],
@@ -226,7 +227,9 @@ const PHOTO={
  224:["Jamshid Nurkulov", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Hyundai_Starex._Bogobod_str,_Tashkent.jpg"],
  225:["Throwawayacc222", "CC0", "https://commons.wikimedia.org/wiki/File:2011_Hyundai_Grand_Starex_2.5_VGT_AT_HVX_VIP_Pack_black_front.jpg"],
  226:["알 수 없음", "Public domain", "https://commons.wikimedia.org/wiki/File:Hyundai_Trajet_2002.jpg"],
+ 227:["사용자 제공", "", ""],
  229:["order_242 from Chile", "CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Hyundai_H100_Porter_1996_(15792176472).jpg"],
+ 230:["사용자 제공", "", ""],
  231:["Rutger van der Maar", "CC BY 2.0", "https://commons.wikimedia.org/wiki/File:1991_Hyundai_Scoupe_1.5i_GTX_Automatic_002.jpg"],
  232:["Jakub CA", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Hyundai_Coupe_(RD;_1996).jpg"],
  233:["Benespit", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:0_Hyundai_Tuscani_1.jpg"],
@@ -317,6 +320,7 @@ const PHOTO={
  320:["Alexander-93", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:SsangYong_Torres_Automesse_Ludwigsburg_2024_IMG_1442.jpg"],
  321:["Damian B Oh", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Samsung_SM5_EX1_Mystic_Gray.jpg"],
  322:["CEFICEFI", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:RENAULT_SAMSUNG_SM5_L43_2013_01.JPG"],
+ 323:["사용자 제공", "", ""],
  324:["M 93", "Attribution", "https://commons.wikimedia.org/wiki/File:Renault_Fluence_front_20100918.jpg"],
  325:["Benespit", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:00_SAMSUNG_SM7_1.jpg"],
  326:["CEFICEFI", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:RENAULT_SAMSUNG_SM7_L47_02.jpg"],
@@ -336,7 +340,7 @@ const PHOTO={
  340:["Rudolf Stricker", "Public domain", "https://commons.wikimedia.org/wiki/File:Daewoo_Lanos_front_20070323.jpg"],
  341:["Benespit", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:0_Daewoo_Magnus_1.jpg"],
  342:["Thomas doerfer", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:Daewoo_Rezzo_Front.jpg"],
- 343:["Nikolai Bulykin", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B,_Daewoo_Damas_%D0%BD%D0%B0_%D0%A2%D0%BE%D0%BB%D0%B5_%D0%B1%D0%B8-%D0%91%D0%B0%D0%B9%D0%B7%D0%B0%D0%BA%D0%BE%D0%B2%D0%B0.jpg"],
+ 343:["사용자 제공", "", ""],
  344:["Nikolai Bulykin", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:%D0%91%D0%BE%D1%80%D0%B0%D0%BB%D0%B4%D0%B0%D0%B9,_Chevrolet_Labo_%D0%BD%D0%B0_%D0%90%D1%8D%D1%80%D0%BE%D0%B4%D1%80%D0%BE%D0%BC%D0%BD%D0%BE%D0%B9_98.jpg"],
  345:["Alexander-93", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Daewoo_Kalos_IMG_9230.jpg"],
  346:["Thomas doerfer", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:Daewoo_Lacetti_CDX.JPG"],

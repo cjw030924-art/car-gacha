@@ -681,6 +681,7 @@ const wiki=c=>"https://ko.wikipedia.org/w/index.php?search="+encodeURIComponent(
 function photo(car,cls=""){return `<div class="photo ${cls}"><img src="img/${car.id}.jpg" alt="${car.name}" loading="lazy" decoding="async" onerror="this.parentNode.innerHTML=svgCar(CARS[${car.id}])"></div>`}
 const esc=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
 function credit(car){const p=typeof PHOTO!=="undefined"&&PHOTO[car.id];if(!p)return"";
+ if(!p[2])return `<div class="credit">사진: ${esc(p[0])}</div>`;
  return `<div class="credit">사진: ${esc(p[0])} · ${esc(p[1])} · <a href="${esc(p[2])}" target="_blank" rel="noopener">위키미디어 커먼즈 ↗</a></div>`}
 
 // ---------- state ----------
