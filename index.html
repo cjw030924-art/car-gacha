@@ -177,7 +177,7 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
       <div class="sub">셔터를 올려 오늘의 차를 뽑으세요 · 실차 기준 <span id="carCount">166</span>종</div>
     </div>
     <div class="hud">
-      <div class="pill"><small>코인</small><b id="coins">0</b><button class="btn ghost" id="refill" style="padding:5px 9px;font-size:12px" hidden>+1000 충전</button></div>
+      <div class="pill"><small>코인</small><b id="coins">0</b><button class="btn ghost" id="refill" style="padding:5px 9px;font-size:12px" hidden>+5000 충전</button></div>
       <div class="pill"><small>SSR 천장</small><b class="pity" id="pity">0/60</b></div>
     </div>
   </header>
@@ -826,7 +826,7 @@ $("resetYes").onclick=()=>{state={coins:3000,owned:{},pity:0};save();$("resetCon
 function tab(which){const p=which==="pull";$("tab-pull").setAttribute("aria-selected",p);$("tab-coll").setAttribute("aria-selected",!p);$("view-pull").hidden=!p;$("view-coll").hidden=p;if(!p)renderColl()}
 $("tab-pull").onclick=()=>tab("pull");$("tab-coll").onclick=()=>tab("coll");
 $("pull1").onclick=()=>pull(1);$("pull10").onclick=()=>pull(10);
-$("refill").onclick=()=>{state.coins+=1000;save();renderHUD()};
+$("refill").onclick=()=>{state.coins+=5000;save();renderHUD()};
 
 const tot=Object.values(WEIGHT).reduce((a,b)=>a+b,0);
 $("odds").innerHTML=RAR.map(r=>`<span><i style="background:${rc(r)}"></i>${r} ${(WEIGHT[r]/tot*100).toFixed(0)}% · ${CARS.filter(c=>c.rar===r).length}종</span>`).join("");
