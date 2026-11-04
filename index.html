@@ -786,7 +786,10 @@ function seriesOf(c){if(SERIES_FIX[c.name])return SERIES_FIX[c.name];
  if(n.startsWith(c.brand+" "))n=n.slice(c.brand.length+1);
  n=n.replace(/^(디 올 뉴|올 뉴|더 뉴)\s/,"");
  const w=n.split(" ");return /^(아이오닉|모델)$/.test(w[0])&&w[1]?w[0]+" "+w[1]:w[0]}
-CARS.forEach(c=>c.ser=seriesOf(c));
+// 현대·기아만 차종별로 나누고, 나머지 브랜드는 브랜드 하나로 묶음 (제네시스 G90·GV80 → 제네시스)
+const SPLIT_BRANDS=new Set(["현대","기아"]);
+CARS.forEach(c=>c.ser=SPLIT_BRANDS.has(c.brand)?seriesOf(c):c.brand);
+CARS.forEach(c=>{if(c.brand==="현대"&&c.ser==="제네시스")c.ser="현대 제네시스"});
 let fR="ALL",fC="ALL",fS="ALL",ownedOnly=false;
 function chips(el,vals,cur,set){el.innerHTML=vals.map(([v,l])=>`<button class="chip" data-v="${v}" aria-pressed="${v===cur}">${l}</button>`).join("");el.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;set(b.dataset.v);renderColl()}}
 function renderColl(){
@@ -810,7 +813,7 @@ function renderColl(){
  // inside a country: one section per series, oldest generation first
  const groups=new Map(sers.map(s=>[s,[]]));list.forEach(c=>groups.get(c.ser).push(c));[...groups].forEach(([s,cs])=>{if(!cs.length)groups.delete(s)});
  $("coll").innerHTML=[...groups].map(([s,cs])=>{const all=CARS.filter(c=>c.cty===fC&&c.ser===s);
-  return `<div class="shead"><b>${s}</b><span>${cs[0].brand} · ${all.filter(c=>state.owned[c.id]).length}/${all.length}대</span>${fS==="ALL"&&all.length>1?`<button class="chip" data-ser="${s}">이 시리즈만</button>`:""}</div>`+
+  return `<div class="shead"><b>${s}</b><span>${cs[0].brand===s?"":cs[0].brand+" · "}${all.filter(c=>state.owned[c.id]).length}/${all.length}대</span>${fS==="ALL"&&all.length>1?`<button class="chip" data-ser="${s}">이 시리즈만</button>`:""}</div>`+
    cs.sort((a,b)=>a.year-b.year).map(c=>cardHTML(c,{coll:true})).join("")}).join("");
 }
 $("q").oninput=renderColl;
