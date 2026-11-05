@@ -1,0 +1,31 @@
+rules_version = '2';
+// 모의주식(users) + 메이플 강화(maple) + 카 가챠(cargacha) 공용 규칙
+// Firebase 콘솔(jh-stock-4cbf6) → Firestore Database → 규칙 탭에 이 내용을 통째로 붙여 넣고 게시하세요.
+service cloud.firestore {
+  match /databases/{db}/documents {
+    // 모의주식
+    match /users/{uid} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.nick is string
+        && request.resource.data.nick.size() >= 2 && request.resource.data.nick.size() <= 12
+        && request.resource.data.total is number;
+    }
+    // 메이플 강화: 랭킹은 로그인한 사람 누구나, 쓰기는 자기 문서만
+    match /maple/{uid} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.nick is string
+        && request.resource.data.nick.size() >= 2 && request.resource.data.nick.size() <= 12
+        && request.resource.data.power is number;
+    }
+    // 카 가챠: 랭킹은 로그인한 사람 누구나, 쓰기는 자기 문서만
+    match /cargacha/{uid} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.nick is string
+        && request.resource.data.nick.size() >= 2 && request.resource.data.nick.size() <= 12
+        && request.resource.data.count is number;
+    }
+  }
+}

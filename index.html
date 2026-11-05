@@ -168,6 +168,22 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
 .specs small{display:block;color:var(--muted);font-size:11px}
 .specs b{font-size:14px}
 @media (prefers-reduced-motion:reduce){.shutter,.flip .inner{transition:none}.drive,.drive .wheel,.aura,.fade{animation:none}}
+/* 로그인 · 랭킹 */
+#view-rank h2{font:800 17px var(--f-body);margin:0 0 4px}
+.cmuted{color:var(--muted);font-size:13px;margin:0}.cbad{color:var(--ur);font-size:13px;margin:0;min-height:1em}
+.acc-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.acc-row>span:last-child{display:flex;gap:8px}
+.acc-nick{font-size:18px;color:var(--line)}
+.acc-form{display:flex;flex-direction:column;gap:8px;max-width:360px}
+.acc-form input{font:600 15px var(--f-body);padding:11px 12px;border-radius:10px;border:2px solid var(--concrete);background:var(--asphalt-2);color:var(--paint)}
+.acc-form input:focus{outline:none;border-color:var(--line)}
+.link-btn{background:none;border:0;color:var(--line);font:800 13px var(--f-body);cursor:pointer;text-decoration:underline;padding:0}
+.rank-list{display:flex;flex-direction:column;gap:6px}
+.rank-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:var(--asphalt-2);border:2px solid transparent}
+.rank-row.me{border-color:var(--line)}
+.rk{width:28px;text-align:center;font-weight:900;color:var(--muted)}.rk.top1{color:var(--ssr)}.rk.top2{color:var(--paint)}.rk.top3{color:#c98a52}
+.rk-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rk-val{font-size:17px}.rk-val small{color:var(--muted);font-size:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--paint);color:var(--asphalt);font:800 14px var(--f-body);padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:calc(100vw - 32px)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
 </style>
 
 <div class="wrap">
@@ -185,6 +201,7 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" id="tab-pull" aria-selected="true">뽑기</button>
     <button class="tab" role="tab" id="tab-coll" aria-selected="false">도감</button>
+    <button class="tab" role="tab" id="tab-rank" aria-selected="false">순위</button>
   </nav>
 
   <section id="view-pull" class="panel">
@@ -218,6 +235,11 @@ input[type=search]{background:var(--asphalt-2);border:1px solid var(--concrete);
     <div class="bar"><input type="search" id="q" placeholder="보유한 차 이름·브랜드 검색"><button class="chip" id="ownedOnly" aria-pressed="false">보유만</button></div>
     <div class="coll" id="coll"></div>
     <div class="foot"><button class="chip" id="reset">기록 초기화</button> <span id="resetConfirm" hidden>정말 지울까요? <button class="chip" id="resetYes">지우기</button> <button class="chip" id="resetNo">취소</button></span></div>
+  </section>
+
+  <section id="view-rank" class="panel" hidden>
+    <div id="account"></div>
+    <div id="rank"></div>
   </section>
 </div>
 
@@ -823,8 +845,8 @@ $("reset").onclick=()=>$("resetConfirm").hidden=false;
 $("resetNo").onclick=()=>$("resetConfirm").hidden=true;
 $("resetYes").onclick=()=>{state={coins:3000,owned:{},pity:0};save();$("resetConfirm").hidden=true;renderHUD();renderColl()};
 
-function tab(which){const p=which==="pull";$("tab-pull").setAttribute("aria-selected",p);$("tab-coll").setAttribute("aria-selected",!p);$("view-pull").hidden=!p;$("view-coll").hidden=p;if(!p)renderColl()}
-$("tab-pull").onclick=()=>tab("pull");$("tab-coll").onclick=()=>tab("coll");
+function tab(which){["pull","coll","rank"].forEach(k=>{$("tab-"+k).setAttribute("aria-selected",k===which);$("view-"+k).hidden=k!==which});if(which==="coll")renderColl();if(which==="rank"&&window.refreshRank)refreshRank()}
+$("tab-pull").onclick=()=>tab("pull");$("tab-coll").onclick=()=>tab("coll");$("tab-rank").onclick=()=>tab("rank");
 $("pull1").onclick=()=>pull(1);$("pull10").onclick=()=>pull(10);
 $("refill").onclick=()=>{state.coins+=5000;save();renderHUD()};
 
@@ -837,4 +859,6 @@ $("carCount").textContent=CARS.length;
 renderHUD();
 </script>
 
+<script src="firebase-config.js"></script>
+<script src="cloud.js"></script>
 </body></html>
