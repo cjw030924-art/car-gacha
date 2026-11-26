@@ -72,10 +72,10 @@ button:focus-visible{outline:2px solid var(--line);outline-offset:2px}
 <body>
 <div class="wrap">
   <header>
-    <div><h1>카 가챠 <span>차고</span></h1><div class="sub">국산 차 246종을 뽑아 모아 보세요</div></div>
+    <div><h1>카 가챠 <span>차고</span></h1><div class="sub">국산 차를 뽑아 모아 보세요 · 지금 <span id="total">0</span>종</div></div>
     <div class="hud">
       <div class="pill"><small>코인</small><b id="coins">0</b></div>
-      <div class="pill"><small>도감</small><b id="have">0</b><small>/ 246</small></div>
+      <div class="pill"><small>도감</small><b id="have">0</b><small>/ <span id="total2">0</span></small></div>
       <div class="pill"><small>SSR 천장</small><b id="pity">0</b><small>/ 50</small></div>
     </div>
   </header>
@@ -108,253 +108,17 @@ button:focus-visible{outline:2px solid var(--line);outline-offset:2px}
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const RAW=`현대 엘란트라 (J1)|현대|1990|sedan|C
-현대 아반떼 (J2)|현대|1995|sedan|C
-현대 아반떼 XD|현대|2000|sedan|C
-현대 아반떼 HD|현대|2006|sedan|C
-현대 아반떼 MD|현대|2010|sedan|C
-현대 아반떼 AD|현대|2015|sedan|C
-현대 올 뉴 아반떼 (CN7)|현대|2020|sedan|R
-현대 디 올 뉴 아반떼|현대|2026|sedan|SR
-현대 아반떼 N|현대|2021|sedan|SR
-현대 쏘나타 디 엣지|현대|2023|sedan|C
-현대 디 올 뉴 그랜저 (GN7)|현대|2022|sedan|R
-현대 캐스퍼|현대|2021|mini|C
-현대 투싼 (NX4)|현대|2020|suv|C
-현대 디 올 뉴 싼타페 (MX5)|현대|2023|suv|R
-현대 디 올 뉴 팰리세이드 (LX3)|현대|2025|suv|R
-현대 갤로퍼|현대|1991|suv|R
-현대 스타리아|현대|2021|van|C
-현대 포터 II|현대|2004|truck|C
-현대 아이오닉 5|현대|2021|hatch|R
-현대 아이오닉 6|현대|2022|sedan|R
-현대 아이오닉 5 N|현대|2023|hatch|SR
-현대 벨로스터 N|현대|2018|hatch|R
-현대 N 비전 74|현대|2022|coupe|SSR
-기아 더 뉴 모닝|기아|2023|mini|C
-기아 더 뉴 레이|기아|2022|mini|C
-기아 프라이드|기아|1987|hatch|C
-기아 K3|기아|2018|sedan|C
-기아 더 뉴 K5|기아|2023|sedan|C
-기아 더 뉴 K8|기아|2024|sedan|R
-기아 더 뉴 K9|기아|2021|sedan|R
-기아 디 올 뉴 셀토스|기아|2026|suv|C
-기아 더 뉴 스포티지|기아|2024|suv|C
-기아 더 뉴 쏘렌토|기아|2023|suv|C
-기아 더 뉴 카니발|기아|2023|van|R
-기아 봉고 III|기아|2004|truck|C
-기아 EV6|기아|2021|hatch|R
-기아 EV6 GT|기아|2022|hatch|SR
-기아 EV9|기아|2023|suv|SR
-기아 스팅어 마이스터|기아|2020|coupe|SR
-제네시스 G70|제네시스|2017|sedan|R
-제네시스 G80 (RG3)|제네시스|2020|sedan|SR
-제네시스 G90 (RS4)|제네시스|2021|sedan|SSR
-제네시스 GV70|제네시스|2020|suv|R
-제네시스 GV80|제네시스|2020|suv|SR
-제네시스 GV90|제네시스|2026|suv|SSR
-KGM 티볼리|KGM|2015|suv|C
-KGM 토레스|KGM|2022|suv|C
-KGM 렉스턴|KGM|2017|suv|R
-쌍용 무쏘|쌍용|1993|suv|R
-르노 그랑 콜레오스|르노코리아|2024|suv|C
-르노삼성 SM5|르노삼성|1998|sedan|C
-쉐보레 트랙스 크로스오버|쉐보레|2023|suv|C
-대우 티코|대우|1991|mini|R
-대우 마티즈|대우|1998|mini|C
-대우 르망|대우|1986|sedan|R
-현대 포니 2|현대|1982|hatch|SR
-현대 포니 엑셀|현대|1985|hatch|R
-현대 스텔라|현대|1983|sedan|R
-현대 엑셀 (X2)|현대|1989|sedan|C
-현대 엑센트 (X3)|현대|1994|sedan|C
-현대 베르나 (LC)|현대|1999|sedan|C
-현대 베르나 (MC)|현대|2005|sedan|C
-현대 엑센트 (RB)|현대|2010|sedan|C
-현대 쏘나타 (Y1)|현대|1985|sedan|R
-현대 쏘나타 (Y2)|현대|1988|sedan|C
-현대 쏘나타 II|현대|1993|sedan|C
-현대 쏘나타 III|현대|1996|sedan|C
-현대 쏘나타 (EF)|현대|1998|sedan|C
-현대 쏘나타 (NF)|현대|2004|sedan|C
-현대 쏘나타 (YF)|현대|2009|sedan|C
-현대 쏘나타 (LF)|현대|2014|sedan|C
-현대 쏘나타 (DN8)|현대|2019|sedan|C
-현대 쏘나타 N 라인|현대|2020|sedan|R
-현대 마르샤|현대|1995|sedan|R
-현대 그랜저 (L)|현대|1986|sedan|SR
-현대 그랜저 (LX)|현대|1992|sedan|R
-현대 그랜저 XG|현대|1998|sedan|C
-현대 그랜저 (TG)|현대|2005|sedan|C
-현대 그랜저 (HG)|현대|2011|sedan|C
-현대 그랜저 (IG)|현대|2016|sedan|C
-현대 다이너스티|현대|1996|sedan|R
-현대 에쿠스 (LZ)|현대|1999|sedan|SR
-현대 에쿠스 (VI)|현대|2009|sedan|SR
-현대 제네시스 (BH)|현대|2008|sedan|R
-현대 제네시스 (DH)|현대|2013|sedan|R
-현대 제네시스 쿠페|현대|2008|coupe|SR
-현대 아슬란|현대|2014|sedan|C
-현대 i30 (FD)|현대|2007|hatch|C
-현대 i30 (GD)|현대|2011|hatch|C
-현대 i30 (PD)|현대|2016|hatch|C
-현대 i30 N|현대|2017|hatch|SR
-현대 i40|현대|2011|sedan|C
-현대 아이오닉 (AE)|현대|2016|hatch|C
-현대 아이오닉 6 N|현대|2025|sedan|SR
-현대 아이오닉 9|현대|2025|suv|SR
-현대 코나 (OS)|현대|2017|suv|C
-현대 코나 (SX2)|현대|2023|suv|C
-현대 코나 N|현대|2021|suv|SR
-현대 베뉴|현대|2019|suv|C
-현대 캐스퍼 일렉트릭|현대|2024|mini|R
-현대 투싼 (JM)|현대|2004|suv|C
-현대 투싼 ix|현대|2009|suv|C
-현대 투싼 (TL)|현대|2015|suv|C
-현대 싼타페 (SM)|현대|2000|suv|C
-현대 싼타페 (CM)|현대|2005|suv|C
-현대 싼타페 (DM)|현대|2012|suv|C
-현대 싼타페 (TM)|현대|2018|suv|C
-현대 테라칸|현대|2001|suv|R
-현대 베라크루즈|현대|2006|suv|C
-현대 맥스크루즈|현대|2013|suv|C
-현대 팰리세이드 (LX2)|현대|2018|suv|R
-현대 갤로퍼 II|현대|1997|suv|R
-현대 그레이스|현대|1986|van|R
-현대 스타렉스|현대|1997|van|C
-현대 그랜드 스타렉스|현대|2007|van|C
-현대 트라제 XG|현대|1999|van|C
-현대 포터 (1세대)|현대|1977|truck|SR
-현대 포터 (2세대)|현대|1986|truck|R
-현대 포터 (3세대)|현대|1996|truck|C
-현대 포터 II 일렉트릭|현대|2019|truck|C
-현대 스쿠프|현대|1990|coupe|SR
-현대 티뷰론|현대|1996|coupe|R
-현대 투스카니|현대|2001|coupe|R
-현대 벨로스터 (FS)|현대|2011|hatch|C
-현대 벨로스터 (JS)|현대|2018|hatch|C
-현대 아토스|현대|1997|mini|C
-현대 클릭|현대|2002|hatch|C
-기아 브리사|기아|1974|sedan|SR
-기아 프라이드 (JB)|기아|2005|sedan|C
-기아 프라이드 (UB)|기아|2011|sedan|C
-기아 비스토|기아|1999|mini|C
-기아 모닝 (SA)|기아|2004|mini|C
-기아 모닝 (TA)|기아|2011|mini|C
-기아 모닝 (JA)|기아|2017|mini|C
-기아 레이 (TAM)|기아|2011|mini|C
-기아 레이 EV|기아|2023|mini|R
-기아 세피아|기아|1992|sedan|C
-기아 스펙트라|기아|2000|sedan|C
-기아 쎄라토|기아|2003|sedan|C
-기아 포르테|기아|2008|sedan|C
-기아 K3 (YD)|기아|2012|sedan|C
-기아 콩코드|기아|1987|sedan|R
-기아 크레도스|기아|1995|sedan|C
-기아 옵티마|기아|2000|sedan|C
-기아 로체|기아|2005|sedan|C
-기아 K5 (TF)|기아|2010|sedan|C
-기아 K5 (JF)|기아|2015|sedan|C
-기아 K5 (DL3)|기아|2019|sedan|C
-기아 포텐샤|기아|1992|sedan|R
-기아 엔터프라이즈|기아|1997|sedan|R
-기아 오피러스|기아|2003|sedan|R
-기아 K7 (VG)|기아|2009|sedan|C
-기아 K7 (YG)|기아|2016|sedan|C
-기아 K8 (GL3)|기아|2021|sedan|R
-기아 K9 (KH)|기아|2012|sedan|R
-기아 스팅어|기아|2017|coupe|R
-기아 엘란|기아|1996|coupe|SSR
-기아 셀토스 (SP2)|기아|2019|suv|C
-기아 니로 (DE)|기아|2016|suv|C
-기아 니로 (SG2)|기아|2022|suv|C
-기아 쏘울|기아|2008|hatch|C
-기아 스포티지 (1세대)|기아|1993|suv|R
-기아 스포티지 (KM)|기아|2004|suv|C
-기아 스포티지 R|기아|2010|suv|C
-기아 스포티지 (QL)|기아|2015|suv|C
-기아 스포티지 (NQ5)|기아|2021|suv|C
-기아 쏘렌토 (BL)|기아|2002|suv|C
-기아 쏘렌토 R|기아|2009|suv|C
-기아 쏘렌토 (UM)|기아|2014|suv|C
-기아 쏘렌토 (MQ4)|기아|2020|suv|C
-기아 모하비|기아|2008|suv|R
-기아 모하비 더 마스터|기아|2019|suv|R
-기아 록스타|기아|1990|suv|R
-기아 레토나|기아|1998|suv|R
-기아 카렌스|기아|1999|van|C
-기아 카니발 (KV)|기아|1998|van|C
-기아 카니발 (VQ)|기아|2005|van|C
-기아 카니발 (YP)|기아|2014|van|C
-기아 카니발 (KA4)|기아|2020|van|C
-기아 봉고 (1세대)|기아|1980|truck|SR
-기아 봉고 프론티어|기아|1997|truck|C
-기아 타스만|기아|2025|truck|SR
-기아 EV3|기아|2024|suv|C
-기아 EV4|기아|2025|sedan|C
-기아 EV5|기아|2023|suv|R
-기아 EV9 GT|기아|2025|suv|SR
-기아 PV5|기아|2025|van|R
-제네시스 G70 슈팅 브레이크|제네시스|2022|sedan|SR
-제네시스 G80 (DH)|제네시스|2016|sedan|R
-제네시스 EQ900|제네시스|2015|sedan|SR
-제네시스 GV60|제네시스|2021|suv|R
-제네시스 GV60 마그마|제네시스|2025|suv|SSR
-쌍용 코란도 (1세대)|쌍용|1983|suv|SR
-쌍용 코란도 (KJ)|쌍용|1996|suv|R
-쌍용 코란도 C|쌍용|2011|suv|C
-쌍용 코란도 (C300)|쌍용|2019|suv|C
-쌍용 칼리스타|쌍용|1991|coupe|SSR
-쌍용 무쏘 스포츠|쌍용|2002|truck|R
-KGM 무쏘 EV|KGM|2025|truck|C
-쌍용 렉스턴 (Y200)|쌍용|2001|suv|R
-쌍용 렉스턴 스포츠|쌍용|2018|truck|C
-쌍용 체어맨|쌍용|1997|sedan|SR
-쌍용 체어맨 W|쌍용|2008|sedan|SR
-쌍용 이스타나|쌍용|1995|van|C
-쌍용 카이런|쌍용|2005|suv|C
-쌍용 액티언|쌍용|2005|suv|C
-KGM 액티언|KGM|2024|suv|R
-쌍용 로디우스|쌍용|2004|van|C
-쌍용 티볼리 에어|쌍용|2016|suv|C
-KGM 토레스 EVX|KGM|2023|suv|C
-르노삼성 SM5 (EX1)|르노삼성|2005|sedan|C
-르노삼성 SM5 (L43)|르노삼성|2010|sedan|C
-르노삼성 SM3|르노삼성|2002|sedan|C
-르노삼성 SM3 (L38)|르노삼성|2009|sedan|C
-르노삼성 SM7|르노삼성|2004|sedan|C
-르노삼성 SM7 (L47)|르노삼성|2011|sedan|C
-르노삼성 SM6|르노삼성|2016|sedan|C
-르노삼성 QM5|르노삼성|2007|suv|C
-르노삼성 QM6|르노삼성|2016|suv|C
-르노삼성 QM3|르노삼성|2013|suv|C
-르노삼성 XM3|르노삼성|2020|suv|C
-대우 로얄 살롱|대우|1980|sedan|R
-대우 프린스|대우|1991|sedan|C
-대우 브로엄|대우|1991|sedan|R
-대우 아카디아|대우|1994|sedan|SR
-대우 에스페로|대우|1990|sedan|R
-대우 씨에로|대우|1994|sedan|C
-대우 누비라|대우|1997|sedan|C
-대우 레간자|대우|1997|sedan|C
-대우 라노스|대우|1997|sedan|C
-대우 매그너스|대우|2000|sedan|C
-대우 레조|대우|2000|van|C
-대우 다마스|대우|1991|van|C
-대우 라보|대우|1991|truck|C
-GM대우 칼로스|GM대우|2002|hatch|C
-GM대우 라세티|GM대우|2002|sedan|C
-GM대우 토스카|GM대우|2006|sedan|C
-GM대우 윈스톰|GM대우|2006|suv|C
-GM대우 알페온|GM대우|2010|sedan|C
-GM대우 마티즈 크리에이티브|GM대우|2009|mini|C
-쉐보레 스파크|쉐보레|2015|mini|C
-쉐보레 크루즈|쉐보레|2011|sedan|C
-쉐보레 말리부|쉐보레|2016|sedan|C
-쉐보레 트랙스|쉐보레|2013|suv|C
-쉐보레 트레일블레이저|쉐보레|2020|suv|C
-쉐보레 올란도|쉐보레|2011|van|C`;
-const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,y,t,r]=l.split("|");return{id:i,name:n,brand:b,year:+y,type:t,rar:r}});
+// 차 목록: 이름|브랜드|차종 시리즈|연식|형태|등급|키(사진 파일 이름이자 저장 키)
+// 새 차는 맨 아래에 한 줄 추가하고 img/키.jpg 사진을 넣으면 됨
+const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
+현대 아반떼 (J2)|현대|아반떼|1995|sedan|C|avante-j2
+현대 아반떼 XD|현대|아반떼|2000|sedan|C|avante-xd
+현대 아반떼 HD|현대|아반떼|2006|sedan|R|avante-hd
+현대 아반떼 MD|현대|아반떼|2010|sedan|R|avante-md
+현대 아반떼 AD|현대|아반떼|2015|sedan|SR|avante-ad
+현대 올 뉴 아반떼 (CN7)|현대|아반떼|2020|sedan|SR|avante-cn7
+현대 디 올 뉴 아반떼 (CN8)|현대|아반떼|2026|sedan|SSR|avante-cn8`;
+const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
 const PITY=50;
@@ -362,13 +126,14 @@ const gc=r=>getComputedStyle(document.documentElement).getPropertyValue("--"+r.t
 const $=id=>document.getElementById(id);
 let S={coins:3000,own:{},pity:0};
 try{const s=JSON.parse(localStorage.getItem("carGachaKR")||"null");if(s&&typeof s.coins==="number")S=Object.assign(S,s)}catch(e){}
+{const old=["avante-j1","avante-j2","avante-xd","avante-hd","avante-md","avante-ad","avante-cn7","avante-cn8"],own={};for(const k in S.own){const key=/^\d+$/.test(k)?old[+k]:k;if(key&&CARS.some(c=>c.id===key))own[key]=S.own[k]}S.own=own}
 const save=()=>{try{localStorage.setItem("carGachaKR",JSON.stringify(S))}catch(e){}};
 
 // 차 옆모습 (사진 대신 차종별 실루엣)
 const PAINT=["#e4e6ea","#1b1f25","#b3261e","#24519e","#f3f3ee","#6f7680","#2f5a3a","#d9a91f","#e8641a","#0f6f78","#8e1b3a"];
 const CAB={sedan:"M52,40 L74,21 L128,21 L152,40",hatch:"M50,40 L70,19 L150,19 L166,40",suv:"M38,40 L52,12 L160,12 L170,40",coupe:"M62,40 L88,22 L124,22 L154,40",
  truck:"M36,40 L50,13 L98,13 L100,40",van:"M20,40 L34,8 L182,8 L186,40",mini:"M48,40 L62,14 L140,14 L152,40"};
-function carSVG(c,color){const p=color||PAINT[(c.id*7)%PAINT.length],dark=p==="#1b1f25"||p==="#24519e"||p==="#8e1b3a";
+function carSVG(c,color){const p=color||PAINT[(c.idx*7)%PAINT.length],dark=p==="#1b1f25"||p==="#24519e"||p==="#8e1b3a";
  const cab=CAB[c.type]||CAB.sedan,mini=c.type==="mini";
  return `<svg viewBox="0 0 200 86" role="img" aria-label="${c.name}"><ellipse cx="100" cy="78" rx="88" ry="5" fill="#0006"/>
  <g transform="${mini?"translate(15,4) scale(.85)":""}">
@@ -382,14 +147,15 @@ function carSVG(c,color){const p=color||PAINT[(c.id*7)%PAINT.length],dark=p==="#
  <g fill="#9aa1aa"><circle cx="48" cy="64" r="6"/><circle cx="154" cy="64" r="6"/></g></g></svg>`}
 
 // 차 사진 (id: 파일). 없으면 실루엣
-const PHOTO={0:"img/avante-j1.jpg",1:"img/avante-j2.jpg",2:"img/avante-xd.jpg",3:"img/avante-hd.jpg",4:"img/avante-md.jpg",5:"img/avante-ad.jpg",6:"img/avante-cn7.jpg",7:"img/avante-cn8.jpg"};
-const pic=(c,lock)=>!lock&&PHOTO[c.id]?`<img src="${PHOTO[c.id]}" alt="${c.name}" loading="lazy">`:carSVG(c,lock?"#3a3f46":null);
+
+const pic=(c,lock)=>!lock&&c.photo?`<img src="${c.photo}" alt="${c.name}" loading="lazy">`:carSVG(c,lock?"#3a3f46":null);
 const esc=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
 function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),1800)}
-function hud(){$("coins").textContent=S.coins.toLocaleString();$("have").textContent=Object.keys(S.own).length;$("pity").textContent=S.pity;
+function hud(){$("total").textContent=$("total2").textContent=CARS.length;$("coins").textContent=S.coins.toLocaleString();$("have").textContent=Object.keys(S.own).length;$("pity").textContent=S.pity;
  $("b1").disabled=S.coins<100;$("b10").disabled=S.coins<1000}
 
-function rollRar(min){if(S.pity>=PITY-1)return"SSR";const pool=Object.entries(WEIGHT).filter(([r])=>!min||["SR","SSR"].includes(r));
+const HAS=r=>CARS.some(c=>c.rar===r);
+function rollRar(min){if(S.pity>=PITY-1&&HAS("SSR"))return"SSR";let pool=Object.entries(WEIGHT).filter(([r])=>HAS(r)&&(!min||["SR","SSR"].includes(r)));if(!pool.length)pool=Object.entries(WEIGHT).filter(([r])=>HAS(r));
  let x=Math.random()*pool.reduce((a,[,w])=>a+w,0);for(const[r,w]of pool){if((x-=w)<0)return r}return"C"}
 function pull(min){const r=rollRar(min);S.pity=r==="SSR"?0:S.pity+1;const list=CARS.filter(c=>c.rar===r),c=list[Math.random()*list.length|0];
  const dup=!!S.own[c.id];S.own[c.id]=(S.own[c.id]||0)+1;if(dup)S.coins+=REFUND[r];return{c,dup}}
@@ -397,7 +163,7 @@ function pull(min){const r=rollRar(min);S.pity=r==="SSR"?0:S.pity+1;const list=C
 function showOne({c,dup}){$("ten").hidden=true;const g=gc(c.rar);
  $("single").innerHTML=`<div class="car in">${pic(c)}</div><div class="result"><span class="grade" style="background:${g}">${c.rar} · ${GNAME[c.rar]}</span>
  <div class="name">${esc(c.name)}${dup?"":'<span class="new">NEW</span>'}</div><div class="meta">${esc(c.brand)} · ${c.year}년 · ${TYPE[c.type]}${dup?" · 중복 +"+REFUND[c.rar]+"코인":""}</div>
- <div class="plate">${String(c.id+1).padStart(3,"0")}가 ${String(1000+c.year%9000).slice(-4)}</div></div>`}
+ <div class="plate">${String(c.idx+1).padStart(3,"0")}가 ${String(1000+c.year%9000).slice(-4)}</div></div>`}
 function showTen(rs){$("single").innerHTML="";const t=$("ten");t.hidden=false;
  t.innerHTML=rs.map(({c,dup})=>`<div class="card" style="--g:${gc(c.rar)}">${pic(c)}<div class="g">${c.rar}${dup?"":" · NEW"}</div><div class="n">${esc(c.name)}</div></div>`).join("")}
 
@@ -408,13 +174,13 @@ $("b10").onclick=()=>{if(S.coins<1000)return;S.coins-=1000;const rs=[];for(let i
 $("bfree").onclick=()=>{S.coins+=1000;save();hud();toast("코인 1000개를 충전했어요")};
 
 // 도감
-const BRANDS=[...new Set(CARS.map(c=>c.brand))];let brand="전체";
+const BRANDS=[...new Set(CARS.map(c=>c.series))];let brand="전체";
 function dex(){const own=Object.keys(S.own).length;$("prog").style.width=(own/CARS.length*100)+"%";
- $("brands").innerHTML=["전체",...BRANDS].map(b=>{const L=b==="전체"?CARS:CARS.filter(c=>c.brand===b),h=L.filter(c=>S.own[c.id]).length;
+ $("brands").innerHTML=["전체",...BRANDS].map(b=>{const L=b==="전체"?CARS:CARS.filter(c=>c.series===b),h=L.filter(c=>S.own[c.id]).length;
   return `<button class="chip" aria-pressed="${b===brand}" data-b="${esc(b)}">${esc(b)} ${h}/${L.length}</button>`}).join("");
- const list=CARS.filter(c=>brand==="전체"||c.brand===brand);
+ const list=CARS.filter(c=>brand==="전체"||c.series===brand);
  $("grid").innerHTML=list.map(c=>{const h=S.own[c.id];return `<div class="slot${h?"":" lock"}">${pic(c,!h)}
-  <div class="n">${h?esc(c.name):"???"}</div><div class="m"><span style="color:${gc(c.rar)};font-weight:800">${c.rar}</span><span>${h?c.year+"년 · ×"+h:esc(c.brand)}</span></div></div>`}).join("")}
+  <div class="n">${h?esc(c.name):"???"}</div><div class="m"><span style="color:${gc(c.rar)};font-weight:800">${c.rar}</span><span>${h?c.year+"년 · ×"+h:esc(c.series)}</span></div></div>`}).join("")}
 $("brands").onclick=e=>{const b=e.target.closest("[data-b]");if(b){brand=b.dataset.b;dex()}};
 function tab(d){$("t-draw").setAttribute("aria-selected",!d);$("t-dex").setAttribute("aria-selected",d);$("p-draw").hidden=d;$("p-dex").hidden=!d;if(d)dex()}
 $("t-draw").onclick=()=>tab(false);$("t-dex").onclick=()=>tab(true);
