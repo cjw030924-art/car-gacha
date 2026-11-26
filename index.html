@@ -177,7 +177,14 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 기아 올 뉴 쏘렌토 (UM)|기아|쏘렌토|2014|suv|R|sorento-um
 기아 더 뉴 쏘렌토 (UM)|기아|쏘렌토|2017|suv|R|sorento-um-fl
 기아 4세대 쏘렌토 (MQ4)|기아|쏘렌토|2020|suv|SR|sorento-mq4
-기아 더 뉴 쏘렌토 (MQ4)|기아|쏘렌토|2023|suv|SSR|sorento-mq4-fl`;
+기아 더 뉴 쏘렌토 (MQ4)|기아|쏘렌토|2023|suv|SSR|sorento-mq4-fl
+현대 싼타페 (CM)|현대|싼타페|2005|suv|C|santafe-cm
+현대 싼타페 더 스타일 (CM)|현대|싼타페|2009|suv|C|santafe-cm-fl
+현대 싼타페 (DM)|현대|싼타페|2012|suv|R|santafe-dm
+현대 싼타페 더 프라임 (DM)|현대|싼타페|2015|suv|R|santafe-dm-fl
+현대 싼타페 (TM)|현대|싼타페|2018|suv|R|santafe-tm
+현대 더 뉴 싼타페 (TM)|현대|싼타페|2020|suv|SR|santafe-tm-fl
+현대 디 올 뉴 싼타페 (MX5)|현대|싼타페|2023|suv|SSR|santafe-mx5`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
