@@ -29,7 +29,8 @@ h1 span{color:var(--line)}
 button:focus-visible{outline:2px solid var(--line);outline-offset:2px}
 .stage{background:linear-gradient(180deg,#1b1e22 0 60%,#0d0f11 60%);border:1px solid var(--line2);border-radius:16px;min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 16px;position:relative;overflow:hidden}
 .stage::after{content:"";position:absolute;left:12%;right:12%;bottom:0;height:40%;border-left:5px solid var(--line);border-right:5px solid var(--line);opacity:.5;pointer-events:none}
-.car{width:min(420px,90%);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .4s}
+#single{width:100%}
+.car{width:min(420px,90%);margin:0 auto;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .4s}
 .car.in{animation:drive .7s cubic-bezier(.2,.8,.2,1)}
 @keyframes drive{from{transform:translateX(-120%)}to{transform:none}}
 .result{text-align:center;margin-top:10px;z-index:1}
