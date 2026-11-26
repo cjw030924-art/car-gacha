@@ -138,7 +138,15 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 현대 그랜저 TG|현대|그랜저|2005|sedan|C|grandeur-tg
 현대 그랜저 HG|현대|그랜저|2011|sedan|R|grandeur-hg
 현대 그랜저 IG|현대|그랜저|2016|sedan|SR|grandeur-ig
-현대 디 올 뉴 그랜저 (GN7)|현대|그랜저|2022|sedan|SSR|grandeur-gn7`;
+현대 디 올 뉴 그랜저 (GN7)|현대|그랜저|2022|sedan|SSR|grandeur-gn7
+현대 소나타 (Y1)|현대|쏘나타|1985|sedan|SR|sonata-y1
+현대 쏘나타 (Y2)|현대|쏘나타|1988|sedan|R|sonata-y2
+현대 쏘나타 (Y3)|현대|쏘나타|1993|sedan|C|sonata-y3
+현대 EF 쏘나타|현대|쏘나타|1998|sedan|C|sonata-ef
+현대 쏘나타 (NF)|현대|쏘나타|2004|sedan|C|sonata-nf
+현대 YF 쏘나타|현대|쏘나타|2009|sedan|R|sonata-yf
+현대 LF 쏘나타|현대|쏘나타|2014|sedan|R|sonata-lf
+현대 쏘나타 디 엣지 N 라인 (DN8)|현대|쏘나타|2023|sedan|SSR|sonata-dn8`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
