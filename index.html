@@ -79,6 +79,24 @@ dialog.info::backdrop{background:#000b}
 .bar{height:8px;background:var(--line2);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--line)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000c;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.on{opacity:1}
+/* 계정·랭킹 */
+.box{background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.box h2{font:800 17px var(--body);margin:0}
+.cmuted{color:var(--muted);font-size:13px;margin:0;font-weight:400}.cbad{color:#ff6b5e;font-size:13px;margin:0;min-height:1em}
+.acc-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.acc-row>span:last-child{display:flex;gap:8px}
+.acc-nick{font-size:18px;color:var(--line)}
+.acc-form{display:flex;flex-direction:column;gap:8px;max-width:360px}
+.acc-form input{font:600 15px var(--body);padding:11px 12px;border-radius:10px;border:1px solid var(--line2);background:var(--bg);color:var(--ink)}
+.acc-form input:focus{outline:none;border-color:var(--line)}
+.btn.sm{padding:9px 14px;font-size:14px}
+.link-btn{background:none;border:0;color:var(--line);font:800 13px var(--body);cursor:pointer;text-decoration:underline;padding:0}
+.rank-list{display:flex;flex-direction:column;gap:6px}
+.rank-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid transparent}
+.rank-row.me{border-color:var(--line)}
+.rk{width:28px;text-align:center;font:800 16px var(--body);color:var(--muted)}
+.rk.top1{color:var(--ssr)}.rk.top2{color:#d7dbe0}.rk.top3{color:#c98a52}
+.rk-name{flex:1;min-width:0;overflow-wrap:anywhere}
+.rk-val{color:var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}.rk-val small{color:var(--muted);font-weight:400}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){.car.in{animation:none}}
 </style>
@@ -96,6 +114,7 @@ dialog.info::backdrop{background:#000b}
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" id="t-draw" aria-selected="true">뽑기</button>
     <button class="tab" role="tab" id="t-dex" aria-selected="false">도감</button>
+    <button class="tab" role="tab" id="t-rank" aria-selected="false">계정·랭킹</button>
   </nav>
 
   <section id="p-draw">
@@ -117,6 +136,11 @@ dialog.info::backdrop{background:#000b}
       <div style="min-width:160px;flex:1;max-width:260px"><div class="bar"><i id="prog"></i></div></div>
     </div>
     <div class="grid" id="grid" style="margin-top:12px"></div>
+  </section>
+
+  <section id="p-rank" hidden style="display:flex;flex-direction:column;gap:12px">
+    <div class="box" id="account"><p class="cmuted">로그인 기능을 불러오는 중…</p></div>
+    <div class="box" id="rank"></div>
   </section>
   <p class="rates">팬 프로젝트이며 각 제조사와 관련이 없습니다. 차 이미지는 AI로 생성한 그림입니다.</p>
 </div>
@@ -344,11 +368,14 @@ document.addEventListener("keydown",e=>{if(!$("info").open)return;if(e.key==="Ar
 $("grid").onclick=e=>{const b=e.target.closest("[data-car]");if(b)openInfo(b.dataset.car)};
 $("stage").onclick=e=>{const b=e.target.closest("[data-car]");if(b)openInfo(b.dataset.car,lastPull,b.dataset.i!=null?+b.dataset.i:0)};
 $("brands").onclick=e=>{const b=e.target.closest("[data-b]");if(b){brand=b.dataset.b;dex()}};
-function tab(d){$("t-draw").setAttribute("aria-selected",!d);$("t-dex").setAttribute("aria-selected",d);$("p-draw").hidden=d;$("p-dex").hidden=!d;if(d)dex()}
-$("t-draw").onclick=()=>tab(false);$("t-dex").onclick=()=>tab(true);
+function tab(w){for(const k of["draw","dex","rank"]){$("t-"+k).setAttribute("aria-selected",k===w);$("p-"+k).hidden=k!==w}
+ if(w==="dex")dex();if(w==="rank"&&window.refreshRank)refreshRank()}
+$("t-draw").onclick=()=>tab("draw");$("t-dex").onclick=()=>tab("dex");$("t-rank").onclick=()=>tab("rank");
 
 $("single").innerHTML=`<div class="car">${carSVG(CARS.find(c=>c.type==="sedan"),"#3a3f46")}</div><div class="result"><div class="name">빈 주차칸</div><div class="meta">뽑기 버튼을 눌러 첫 차를 들여보세요</div></div>`;
 hud();
 </script>
+<script src="firebase-config.js"></script>
+<script src="cloud.js"></script>
 </body>
 </html>
