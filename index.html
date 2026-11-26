@@ -163,7 +163,13 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 기아 K9 (KH)|기아|K9|2012|sedan|R|k9-kh
 기아 더 뉴 K9 (KH)|기아|K9|2015|sedan|SR|k9-kh-fl
 기아 더 K9 (RJ)|기아|K9|2018|sedan|SR|k9-rj
-기아 더 뉴 K9 (RJ)|기아|K9|2021|sedan|SSR|k9-rj-fl`;
+기아 더 뉴 K9 (RJ)|기아|K9|2021|sedan|SSR|k9-rj-fl
+현대 투싼 (JM)|현대|투싼|2004|suv|C|tucson-jm
+현대 투싼 ix (LM)|현대|투싼|2009|suv|C|tucson-lm
+현대 올 뉴 투싼 (TL)|현대|투싼|2015|suv|R|tucson-tl
+현대 디 올 뉴 투싼 (NX4)|현대|투싼|2020|suv|R|tucson-nx4
+현대 더 뉴 투싼 (NX4)|현대|투싼|2023|suv|SR|tucson-nx4-fl
+현대 디 올 뉴 투싼 (NX5)|현대|투싼|2026|suv|SSR|tucson-nx5`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
