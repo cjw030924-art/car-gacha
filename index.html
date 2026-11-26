@@ -46,6 +46,8 @@ button:focus-visible{outline:2px solid var(--line);outline-offset:2px}
 .ten{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%;margin-top:14px;z-index:1}
 @media (max-width:560px){.ten{grid-template-columns:repeat(2,1fr)}}
 .card{background:var(--panel);border:1px solid var(--line2);border-top:4px solid var(--g);border-radius:10px;padding:8px;text-align:center;min-width:0}
+.card{color:inherit;font:inherit;cursor:pointer;transition:transform .15s}.card:hover{transform:translateY(-2px)}
+.car[data-car]{cursor:pointer}
 .card svg,.card img{width:100%;height:auto;display:block;border-radius:6px}
 .car img{width:100%;height:auto;display:block;border-radius:12px;box-shadow:0 12px 30px #0008}
 .slot img{width:100%;aspect-ratio:7/5;object-fit:cover;display:block;border-radius:6px}
@@ -129,7 +131,14 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 현대 아반떼 MD|현대|아반떼|2010|sedan|R|avante-md
 현대 아반떼 AD|현대|아반떼|2015|sedan|SR|avante-ad
 현대 올 뉴 아반떼 (CN7)|현대|아반떼|2020|sedan|SR|avante-cn7
-현대 디 올 뉴 아반떼 (CN8)|현대|아반떼|2026|sedan|SSR|avante-cn8`;
+현대 디 올 뉴 아반떼 (CN8)|현대|아반떼|2026|sedan|SSR|avante-cn8
+현대 그랜저 L|현대|그랜저|1986|sedan|SR|grandeur-l
+현대 뉴 그랜저 LX|현대|그랜저|1992|sedan|R|grandeur-lx
+현대 그랜저 XG|현대|그랜저|1998|sedan|C|grandeur-xg
+현대 그랜저 TG|현대|그랜저|2005|sedan|C|grandeur-tg
+현대 그랜저 HG|현대|그랜저|2011|sedan|R|grandeur-hg
+현대 그랜저 IG|현대|그랜저|2016|sedan|SR|grandeur-ig
+현대 디 올 뉴 그랜저 (GN7)|현대|그랜저|2022|sedan|SSR|grandeur-gn7`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
@@ -173,11 +182,12 @@ function pull(min){const r=rollRar(min);S.pity=r==="SSR"?0:S.pity+1;const list=C
  const dup=!!S.own[c.id];S.own[c.id]=(S.own[c.id]||0)+1;if(dup)S.coins+=REFUND[r];return{c,dup}}
 
 function showOne({c,dup}){$("ten").hidden=true;const g=gc(c.rar);
- $("single").innerHTML=`<div class="car in">${pic(c)}</div><div class="result"><span class="grade" style="background:${g}">${c.rar} · ${GNAME[c.rar]}</span>
+ lastPull=[c];$("single").innerHTML=`<div class="car in" data-car="${c.id}" title="눌러서 자세히 보기">${pic(c)}</div><div class="result"><span class="grade" style="background:${g}">${c.rar} · ${GNAME[c.rar]}</span>
  <div class="name">${esc(c.name)}${dup?"":'<span class="new">NEW</span>'}</div><div class="meta">${esc(c.brand)} · ${c.year}년 · ${TYPE[c.type]}${dup?" · 중복 +"+REFUND[c.rar]+"코인":""}</div>
  <div class="plate">${String(c.idx+1).padStart(3,"0")}가 ${String(1000+c.year%9000).slice(-4)}</div></div>`}
-function showTen(rs){$("single").innerHTML="";const t=$("ten");t.hidden=false;
- t.innerHTML=rs.map(({c,dup})=>`<div class="card" style="--g:${gc(c.rar)}">${pic(c)}<div class="g">${c.rar}${dup?"":" · NEW"}</div><div class="n">${esc(c.name)}</div></div>`).join("")}
+let lastPull=[];
+function showTen(rs){$("single").innerHTML="";const t=$("ten");t.hidden=false;lastPull=rs.map(x=>x.c);
+ t.innerHTML=rs.map(({c,dup},i)=>`<button class="card" data-car="${c.id}" data-i="${i}" style="--g:${gc(c.rar)}">${pic(c)}<div class="g">${c.rar}${dup?"":" · NEW"}</div><div class="n">${esc(c.name)}</div></button>`).join("")}
 
 $("b1").onclick=()=>{if(S.coins<100)return;S.coins-=100;showOne(pull());save();hud()};
 $("b10").onclick=()=>{if(S.coins<1000)return;S.coins-=1000;const rs=[];for(let i=0;i<10;i++)rs.push(pull());
@@ -195,7 +205,7 @@ function dex(){const own=Object.keys(S.own).length;$("prog").style.width=(own/CA
   <div class="n">${h?esc(c.name):"???"}</div><div class="m"><span style="color:${gc(c.rar)};font-weight:800">${c.rar}</span><span>${h?c.year+"년 · ×"+h:esc(c.series)}</span></div></button>`}).join("")}
 // 도감 상세
 let infoList=[],infoI=0;
-function openInfo(id){infoList=CARS.filter(c=>brand==="전체"||c.series===brand);infoI=infoList.findIndex(c=>c.id===id);showInfo();const d=$("info");if(!d.open)d.showModal()}
+function openInfo(id,list,at){infoList=list||CARS.filter(c=>brand==="전체"||c.series===brand);infoI=at!=null?at:infoList.findIndex(c=>c.id===id);showInfo();const d=$("info");if(!d.open)d.showModal()}
 function showInfo(){const c=infoList[infoI],h=S.own[c.id],d=$("info");d.style.setProperty("--g",gc(c.rar));
  d.innerHTML=`<div class="ph">${pic(c,!h)}<button class="x" id="ix" aria-label="닫기">×</button></div><div class="body">
  <span class="grade" style="background:${gc(c.rar)};align-self:flex-start">${c.rar} · ${GNAME[c.rar]}</span>
@@ -207,6 +217,7 @@ function showInfo(){const c=infoList[infoI],h=S.own[c.id],d=$("info");d.style.se
 $("info").addEventListener("click",e=>{if(e.target.id==="info")e.target.close()});
 document.addEventListener("keydown",e=>{if(!$("info").open)return;if(e.key==="ArrowLeft"&&infoI>0){infoI--;showInfo()}if(e.key==="ArrowRight"&&infoI<infoList.length-1){infoI++;showInfo()}});
 $("grid").onclick=e=>{const b=e.target.closest("[data-car]");if(b)openInfo(b.dataset.car)};
+$("stage").onclick=e=>{const b=e.target.closest("[data-car]");if(b)openInfo(b.dataset.car,lastPull,b.dataset.i!=null?+b.dataset.i:0)};
 $("brands").onclick=e=>{const b=e.target.closest("[data-b]");if(b){brand=b.dataset.b;dex()}};
 function tab(d){$("t-draw").setAttribute("aria-selected",!d);$("t-dex").setAttribute("aria-selected",d);$("p-draw").hidden=d;$("p-dex").hidden=!d;if(d)dex()}
 $("t-draw").onclick=()=>tab(false);$("t-dex").onclick=()=>tab(true);
