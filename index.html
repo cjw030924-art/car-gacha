@@ -184,7 +184,15 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 현대 싼타페 더 프라임 (DM)|현대|싼타페|2015|suv|R|santafe-dm-fl
 현대 싼타페 (TM)|현대|싼타페|2018|suv|R|santafe-tm
 현대 더 뉴 싼타페 (TM)|현대|싼타페|2020|suv|SR|santafe-tm-fl
-현대 디 올 뉴 싼타페 (MX5)|현대|싼타페|2023|suv|SSR|santafe-mx5`;
+현대 디 올 뉴 싼타페 (MX5)|현대|싼타페|2023|suv|SSR|santafe-mx5
+기아 카니발 (UP)|기아|카니발|1998|van|C|carnival-up
+기아 카니발 II (UP)|기아|카니발|2001|van|C|carnival-up-fl
+기아 그랜드 카니발 (VQ)|기아|카니발|2005|van|C|carnival-vq
+기아 카니발R (VQ)|기아|카니발|2010|van|R|carnival-vq-fl
+기아 올 뉴 카니발 (YP)|기아|카니발|2014|van|R|carnival-yp
+기아 더 뉴 카니발 (YP)|기아|카니발|2018|van|R|carnival-yp-fl
+기아 4세대 카니발 (KA4)|기아|카니발|2020|van|SR|carnival-ka4
+기아 더 뉴 카니발 (KA4)|기아|카니발|2023|van|SSR|carnival-ka4-fl`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
