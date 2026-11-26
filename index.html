@@ -57,7 +57,18 @@ button:focus-visible{outline:2px solid var(--line);outline-offset:2px}
 .chip{background:var(--panel);border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:6px 12px;font:700 13px var(--body);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--line);color:#151515;border-color:var(--line)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.slot{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:8px;min-width:0}
+.slot{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:8px;min-width:0;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:transform .15s,border-color .15s}
+.slot:hover{transform:translateY(-2px);border-color:var(--line)}
+dialog.info{background:var(--panel);color:var(--ink);border:1px solid var(--line2);border-top:5px solid var(--g);border-radius:16px;padding:0;width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto}
+dialog.info::backdrop{background:#000b}
+.info .ph{position:relative;background:#0d0f11}
+.info .ph img,.info .ph svg{width:100%;height:auto;display:block}
+.info .x{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:#000a;color:#fff;font-size:20px;cursor:pointer}
+.info .body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px}
+.info h2{font-family:var(--display);font-weight:400;font-size:28px;margin:0}
+.info dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:14px}
+.info dt{color:var(--muted)}.info dd{margin:0;font-weight:700}
+.info .nav{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
 .slot.lock{opacity:.45}
 .slot svg{width:100%;height:auto}
 .slot .n{font-size:12px;font-weight:700;overflow-wrap:anywhere}
@@ -106,6 +117,7 @@ button:focus-visible{outline:2px solid var(--line);outline-offset:2px}
   </section>
   <p class="rates">팬 프로젝트이며 각 제조사와 관련이 없습니다. 차 이미지는 AI로 생성한 그림입니다.</p>
 </div>
+<dialog class="info" id="info"></dialog>
 <div class="toast" id="toast"></div>
 <script>
 // 차 목록: 이름|브랜드|차종 시리즈|연식|형태|등급|키(사진 파일 이름이자 저장 키)
@@ -179,8 +191,22 @@ function dex(){const own=Object.keys(S.own).length;$("prog").style.width=(own/CA
  $("brands").innerHTML=["전체",...BRANDS].map(b=>{const L=b==="전체"?CARS:CARS.filter(c=>c.series===b),h=L.filter(c=>S.own[c.id]).length;
   return `<button class="chip" aria-pressed="${b===brand}" data-b="${esc(b)}">${esc(b)} ${h}/${L.length}</button>`}).join("");
  const list=CARS.filter(c=>brand==="전체"||c.series===brand);
- $("grid").innerHTML=list.map(c=>{const h=S.own[c.id];return `<div class="slot${h?"":" lock"}">${pic(c,!h)}
-  <div class="n">${h?esc(c.name):"???"}</div><div class="m"><span style="color:${gc(c.rar)};font-weight:800">${c.rar}</span><span>${h?c.year+"년 · ×"+h:esc(c.series)}</span></div></div>`}).join("")}
+ $("grid").innerHTML=list.map(c=>{const h=S.own[c.id];return `<button class="slot${h?"":" lock"}" data-car="${c.id}">${pic(c,!h)}
+  <div class="n">${h?esc(c.name):"???"}</div><div class="m"><span style="color:${gc(c.rar)};font-weight:800">${c.rar}</span><span>${h?c.year+"년 · ×"+h:esc(c.series)}</span></div></button>`}).join("")}
+// 도감 상세
+let infoList=[],infoI=0;
+function openInfo(id){infoList=CARS.filter(c=>brand==="전체"||c.series===brand);infoI=infoList.findIndex(c=>c.id===id);showInfo();const d=$("info");if(!d.open)d.showModal()}
+function showInfo(){const c=infoList[infoI],h=S.own[c.id],d=$("info");d.style.setProperty("--g",gc(c.rar));
+ d.innerHTML=`<div class="ph">${pic(c,!h)}<button class="x" id="ix" aria-label="닫기">×</button></div><div class="body">
+ <span class="grade" style="background:${gc(c.rar)};align-self:flex-start">${c.rar} · ${GNAME[c.rar]}</span>
+ <h2>${h?esc(c.name):"???"}</h2>
+ ${h?`<dl><dt>브랜드</dt><dd>${esc(c.brand)}</dd><dt>차종</dt><dd>${esc(c.series)}</dd><dt>출시</dt><dd>${c.year}년</dd><dt>형태</dt><dd>${TYPE[c.type]}</dd><dt>보유</dt><dd>${h}대</dd><dt>중복 환급</dt><dd>${REFUND[c.rar]}코인</dd></dl>`
+   :`<p class="meta">아직 뽑지 않은 ${esc(c.series)}예요. 뽑으면 사진과 정보가 열려요.</p>`}
+ <div class="nav"><button class="btn ghost" id="ip" ${infoI?"":"disabled"}>◀ 이전</button><span class="meta" style="align-self:center">${infoI+1} / ${infoList.length}</span><button class="btn ghost" id="in" ${infoI<infoList.length-1?"":"disabled"}>다음 ▶</button></div></div>`;
+ $("ix").onclick=()=>d.close();$("ip").onclick=()=>{infoI--;showInfo()};$("in").onclick=()=>{infoI++;showInfo()}}
+$("info").addEventListener("click",e=>{if(e.target.id==="info")e.target.close()});
+document.addEventListener("keydown",e=>{if(!$("info").open)return;if(e.key==="ArrowLeft"&&infoI>0){infoI--;showInfo()}if(e.key==="ArrowRight"&&infoI<infoList.length-1){infoI++;showInfo()}});
+$("grid").onclick=e=>{const b=e.target.closest("[data-car]");if(b)openInfo(b.dataset.car)};
 $("brands").onclick=e=>{const b=e.target.closest("[data-b]");if(b){brand=b.dataset.b;dex()}};
 function tab(d){$("t-draw").setAttribute("aria-selected",!d);$("t-dex").setAttribute("aria-selected",d);$("p-draw").hidden=d;$("p-dex").hidden=!d;if(d)dex()}
 $("t-draw").onclick=()=>tab(false);$("t-dex").onclick=()=>tab(true);
