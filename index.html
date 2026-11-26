@@ -212,7 +212,12 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 기아 레이 (TAM)|기아|레이|2011|mini|C|ray-1
 기아 더 뉴 레이 (TAM)|기아|레이|2017|mini|C|ray-1-fl
 기아 더 뉴 기아 레이 (TAM)|기아|레이|2022|mini|R|ray-1-fl2
-기아 레이 EV (TAM)|기아|레이|2023|mini|SR|ray-ev`;
+기아 레이 EV (TAM)|기아|레이|2023|mini|SR|ray-ev
+GM대우 마티즈 크리에이티브 (M300)|GM대우|스파크|2009|mini|C|spark-m300-matiz
+쉐보레 스파크 (M300)|쉐보레|스파크|2011|mini|C|spark-m300
+쉐보레 스파크 EV (M300)|쉐보레|스파크|2013|mini|SR|spark-ev
+쉐보레 더 넥스트 스파크 (M400)|쉐보레|스파크|2015|mini|C|spark-m400
+쉐보레 더 뉴 스파크 (M400)|쉐보레|스파크|2018|mini|R|spark-m400-fl`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
