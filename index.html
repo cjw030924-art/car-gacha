@@ -195,7 +195,13 @@ const RAW=`현대 엘란트라 (J1)|현대|아반떼|1990|sedan|C|avante-j1
 기아 더 뉴 카니발 (KA4)|기아|카니발|2023|van|SSR|carnival-ka4-fl
 현대 팰리세이드 (LX2)|현대|팰리세이드|2018|suv|R|palisade-lx2
 현대 더 뉴 팰리세이드 (LX2)|현대|팰리세이드|2022|suv|SR|palisade-lx2-fl
-현대 디 올 뉴 팰리세이드 (LX3)|현대|팰리세이드|2025|suv|SSR|palisade-lx3`;
+현대 디 올 뉴 팰리세이드 (LX3)|현대|팰리세이드|2025|suv|SSR|palisade-lx3
+기아 뉴 스포티지 (KM)|기아|스포티지|2004|suv|C|sportage-km
+기아 스포티지R (SL)|기아|스포티지|2010|suv|C|sportage-sl
+기아 더 SUV 스포티지 (QL)|기아|스포티지|2015|suv|R|sportage-ql
+기아 스포티지 더 볼드 (QL)|기아|스포티지|2018|suv|R|sportage-ql-fl
+기아 디 올 뉴 스포티지 (NQ5)|기아|스포티지|2021|suv|SR|sportage-nq5
+기아 더 뉴 스포티지 (NQ5)|기아|스포티지|2024|suv|SSR|sportage-nq5-fl`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
