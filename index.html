@@ -249,7 +249,11 @@ GM대우 마티즈 크리에이티브 (M300)|GM대우|스파크|2009|mini|C|spar
 기아 모하비 (HM)|기아|모하비|2008|suv|R|mohave-hm
 기아 더 뉴 모하비 (HM)|기아|모하비|2016|suv|R|mohave-hm-fl
 기아 모하비 더 마스터 (HM)|기아|모하비|2019|suv|SR|mohave-hm-fl2
-기아 모하비 그래비티 (HM)|기아|모하비|2021|suv|SSR|mohave-gravity`;
+기아 모하비 그래비티 (HM)|기아|모하비|2021|suv|SSR|mohave-gravity
+현대 벨로스터 (FS)|현대|벨로스터|2011|hatch|R|veloster-fs
+현대 벨로스터 (JS)|현대|벨로스터|2018|hatch|R|veloster-js
+현대 벨로스터 N (JS)|현대|벨로스터|2018|hatch|SR|veloster-n
+현대 벨로스터 N DCT (JS)|현대|벨로스터|2020|hatch|SSR|veloster-n-dct`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
