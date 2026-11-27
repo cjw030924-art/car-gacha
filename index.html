@@ -311,7 +311,13 @@ GM대우 마티즈 크리에이티브 (M300)|GM대우|스파크|2009|mini|C|spar
 르노삼성 XM3 (LJL)|르노삼성|XM3|2020|suv|R|xm3-ljl
 르노코리아 XM3 E-TECH 하이브리드 (LJL)|르노코리아|XM3|2022|suv|SR|xm3-etech
 르노코리아 XM3 (LJL) 부분변경|르노코리아|XM3|2023|suv|R|xm3-ljl-fl
-르노 아르카나 (LJL)|르노코리아|XM3|2024|suv|SR|arkana`;
+르노 아르카나 (LJL)|르노코리아|XM3|2024|suv|SR|arkana
+르노 콜레오스 (H45)|르노|콜레오스|2008|suv|C|koleos-h45
+르노 콜레오스 (HZG)|르노|콜레오스|2016|suv|R|koleos-hzg
+르노 그랑 콜레오스|르노코리아|콜레오스|2024|suv|SR|grand-koleos
+르노삼성 QM3 (J87)|르노삼성|캡처|2013|suv|C|qm3-j87
+르노삼성 캡처 (HJB)|르노삼성|캡처|2020|suv|R|captur-hjb
+르노 캡처 (HJB) 부분변경|르노|캡처|2023|suv|R|captur-hjb-fl`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
