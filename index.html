@@ -326,7 +326,11 @@ GM대우 마티즈 크리에이티브 (M300)|GM대우|스파크|2009|mini|C|spar
 르노 마스터 (X70)|르노|마스터|1998|van|C|master-x70
 르노삼성 마스터 (X62)|르노삼성|마스터|2018|van|R|master-x62
 르노삼성 마스터 (X62) 부분변경|르노삼성|마스터|2020|van|R|master-x62-fl
-르노 더 뉴 마스터|르노|마스터|2024|van|SR|master-4`;
+르노 더 뉴 마스터|르노|마스터|2024|van|SR|master-4
+현대 스타렉스 (A1)|현대|스타렉스|1997|van|C|starex-a1
+현대 그랜드 스타렉스 (TQ)|현대|스타렉스|2007|van|C|starex-tq
+현대 더 뉴 그랜드 스타렉스 (TQ)|현대|스타렉스|2018|van|R|starex-tq-fl
+현대 스타리아 (US4)|현대|스타렉스|2021|van|SR|staria-us4`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
