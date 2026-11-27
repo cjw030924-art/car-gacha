@@ -294,7 +294,14 @@ GM대우 마티즈 크리에이티브 (M300)|GM대우|스파크|2009|mini|C|spar
 르노삼성 SM5 (KPQ)|르노삼성|SM5|1998|sedan|C|sm5-kpq
 르노삼성 뉴 SM5 (EX1)|르노삼성|SM5|2005|sedan|C|sm5-ex1
 르노삼성 뉴 SM5 (L43)|르노삼성|SM5|2010|sedan|R|sm5-l43
-르노삼성 SM5 노바 (L43)|르노삼성|SM5|2015|sedan|R|sm5-nova`;
+르노삼성 SM5 노바 (L43)|르노삼성|SM5|2015|sedan|R|sm5-nova
+르노삼성 SM6 (LFD)|르노삼성|SM6|2016|sedan|R|sm6-lfd
+르노삼성 더 뉴 SM6 (LFD)|르노삼성|SM6|2020|sedan|R|sm6-lfd-fl
+르노삼성 더 뉴 SM6 TCe 300 (LFD)|르노삼성|SM6|2020|sedan|SR|sm6-tce300
+르노삼성 SM7 (EX2)|르노삼성|SM7|2004|sedan|R|sm7-ex2
+르노삼성 SM7 뉴 아트 (EX2)|르노삼성|SM7|2008|sedan|R|sm7-ex2-fl
+르노삼성 올 뉴 SM7 (L47)|르노삼성|SM7|2011|sedan|R|sm7-l47
+르노삼성 SM7 노바 (L47)|르노삼성|SM7|2014|sedan|SR|sm7-nova`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
