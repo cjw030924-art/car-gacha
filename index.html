@@ -317,7 +317,16 @@ GM대우 마티즈 크리에이티브 (M300)|GM대우|스파크|2009|mini|C|spar
 르노 그랑 콜레오스|르노코리아|콜레오스|2024|suv|SR|grand-koleos
 르노삼성 QM3 (J87)|르노삼성|캡처|2013|suv|C|qm3-j87
 르노삼성 캡처 (HJB)|르노삼성|캡처|2020|suv|R|captur-hjb
-르노 캡처 (HJB) 부분변경|르노|캡처|2023|suv|R|captur-hjb-fl`;
+르노 캡처 (HJB) 부분변경|르노|캡처|2023|suv|R|captur-hjb-fl
+르노코리아 필랑트|르노코리아|필랑트|2026|suv|SSR|filante
+르노 세닉 (JA)|르노|세닉|1996|van|C|scenic-ja
+르노 세닉 (JM)|르노|세닉|2003|van|C|scenic-jm
+르노 세닉 (JZ)|르노|세닉|2009|van|R|scenic-jz
+르노 세닉 E-Tech 일렉트릭|르노|세닉|2024|suv|SR|scenic-etech
+르노 마스터 (X70)|르노|마스터|1998|van|C|master-x70
+르노삼성 마스터 (X62)|르노삼성|마스터|2018|van|R|master-x62
+르노삼성 마스터 (X62) 부분변경|르노삼성|마스터|2020|van|R|master-x62-fl
+르노 더 뉴 마스터|르노|마스터|2024|van|SR|master-4`;
 const CARS=RAW.trim().split("\n").map((l,i)=>{const[n,b,se,y,t,r,k]=l.split("|");return{id:k,idx:i,name:n,brand:b,series:se,year:+y,type:t,rar:r,photo:"img/"+k+".jpg"}});
 const WEIGHT={C:55,R:30,SR:12,SSR:3},REFUND={C:10,R:20,SR:60,SSR:200},GNAME={C:"커먼",R:"레어",SR:"슈퍼 레어",SSR:"스페셜 레어"};
 const TYPE={sedan:"세단",suv:"SUV",hatch:"해치백",coupe:"쿠페",truck:"트럭",van:"밴·MPV",mini:"경차"};
